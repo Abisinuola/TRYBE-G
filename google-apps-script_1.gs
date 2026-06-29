@@ -1,12 +1,6 @@
 /**
  * TRYBE-G - Google Apps Script backend.
  *
- * Handles:
- *  - Profile Sync (search + update member records)
- *  - Shirt Interest registrations  -> "Shirt Interest" sheet
- *  - Meeting Feedback              -> "Meeting Feedback" sheet
- *  - Contact form submissions      -> "Contact" sheet + email to youths@highlandchurch.com.ng
- *
  * Sheet columns (0-indexed) for "Form Responses 1":
  *   0  Timestamp          6  Gender
  *   1  Source             7  Age group
@@ -55,6 +49,13 @@ function normalize_(value) {
   return (value || "").toString().trim().toLowerCase();
 }
 
+function maskEmail_(email) {
+  const e = normalize_(email);
+  const at = e.indexOf("@");
+  if (at < 2) return "***";
+  return e.slice(0, 2) + "***" + e.slice(at);
+}
+
 function doGet(e) {
   if (e.parameter.action === "search") {
     const query = normalize_(e.parameter.query).replace(/\s/g, "");
@@ -72,6 +73,37 @@ function doGet(e) {
     return jsonResponse_({ found: false });
   }
 
+  if (e.parameter.action === "fuzzySearch") {
+    const firstName = normalize_(e.parameter.firstName || "");
+    const lastName  = normalize_(e.parameter.lastName  || "");
+    if (!firstName && !lastName) return jsonResponse_({ matches: [] });
+
+    const sheet = getMemberSheet_();
+    const data  = sheet.getDataRange().getValues();
+    const matches = [];
+
+    for (let i = 1; i < data.length; i++) {
+      const row    = data[i];
+      const rFirst = normalize_(row[2]);
+      const rLast  = normalize_(row[3]);
+      const firstMatch = firstName && rFirst === firstName;
+      const lastMatch  = lastName  && rLast  === lastName;
+      if (firstMatch || lastMatch) {
+        matches.push({
+          rowIndex:  i + 1,
+          firstName: (row[2] || "").toString().trim(),
+          lastName:  (row[3] || "").toString().trim(),
+          email:     maskEmail_(row[5]),
+          phone:     (row[4] || "").toString().replace(/.(?=.{4})/g, "*"),
+          dobMonth:  (row[9]  || "").toString().trim(),
+          dobDay:    (row[10] || "").toString().trim(),
+          _rowIndex: i + 1
+        });
+      }
+    }
+    return jsonResponse_({ matches });
+  }
+
   return jsonResponse_({ error: "Unknown action" });
 }
 
@@ -80,6 +112,24 @@ function doPost(e) {
 
   if (body.action === "update") {
     return handleUpdate_(body.member);
+  }
+
+  if (body.action === "register") {
+    const sheet = getMemberSheet_();
+    sheet.appendRow([
+      new Date(),
+      "Website",
+      body.firstName || "",
+      body.lastName  || "",
+      body.phone     || "",
+      body.email     || "",
+      "",
+      "",
+      "",
+      body.dobMonth  || "",
+      body.dobDay    || ""
+    ]);
+    return jsonResponse_({ success: true });
   }
 
   if (body.action === "shirtInterest") {
