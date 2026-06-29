@@ -143,21 +143,6 @@
       </a>
     </div>
 
-    <button id="menuBtn" aria-label="Open menu" aria-expanded="false" class="lg:hidden text-white p-2 -mr-2">
-      <svg id="menuIconOpen" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      <svg id="menuIconClose" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-  </div>
-
-  <div id="mobileMenu" class="hidden lg:hidden bg-ink border-t border-white/10">
-    <nav class="flex flex-col px-6 py-5 gap-4 text-white/90 font-medium">
-      <a href="#identity" class="mobile-link py-1">Identity</a>
-      <a href="#portal" class="mobile-link py-1">Portal</a>
-      <a href="#merch" class="mobile-link py-1">Merch</a>
-      <a href="#meeting" class="mobile-link py-1">Next Meeting</a>
-      <a href="#contact" class="mobile-link py-1">Contact</a>
-      <a href="#portal" class="mobile-link mt-2 inline-flex justify-center bg-brand text-white font-semibold px-5 py-3 chamfer-sm">Join the Trybe</a>
-    </nav>
   </div>
 </header>
 
@@ -414,7 +399,7 @@
 
 </main>
 
-<footer id="contact" class="bg-ink text-white pt-20 pb-10">
+<footer id="contact" class="bg-ink text-white pt-20 pb-10 lg:pb-10 pb-24">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
     <div class="flex flex-col items-center text-center reveal">
@@ -500,25 +485,6 @@ document.getElementById("venueText").textContent = CONFIG.VENUE_TEXT;
 document.getElementById("meetingDetail").textContent = CONFIG.MEETING.label;
 document.getElementById("year").textContent = new Date().getFullYear();
 
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
-const iconOpen = document.getElementById("menuIconOpen");
-const iconClose = document.getElementById("menuIconClose");
-
-menuBtn.addEventListener("click", () => {
-  const isHidden = mobileMenu.classList.contains("hidden");
-  mobileMenu.classList.toggle("hidden");
-  iconOpen.classList.toggle("hidden");
-  iconClose.classList.toggle("hidden");
-  menuBtn.setAttribute("aria-expanded", String(isHidden));
-});
-document.querySelectorAll(".mobile-link").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.add("hidden");
-    iconOpen.classList.remove("hidden");
-    iconClose.classList.add("hidden");
-  });
-});
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -785,6 +751,29 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.target.reset();
 });
 </script>
+
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-ink/95 backdrop-blur border-t border-white/10 flex items-stretch">
+  <a href="#identity" class="mobile-link flex-1 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-brand transition-colors text-[10px] font-medium uppercase tracking-widest">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2zm-8 18a8 8 0 0 1 16 0"/></svg>
+    Identity
+  </a>
+  <a href="#portal" class="mobile-link flex-1 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-brand transition-colors text-[10px] font-medium uppercase tracking-widest">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h10"/></svg>
+    Portal
+  </a>
+  <a href="#merch" class="mobile-link flex-1 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-brand transition-colors text-[10px] font-medium uppercase tracking-widest">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2l1.5 4h9L18 2M3 6h18l-1.5 14H4.5L3 6z"/></svg>
+    Merch
+  </a>
+  <a href="#meeting" class="mobile-link flex-1 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-brand transition-colors text-[10px] font-medium uppercase tracking-widest">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Meeting
+  </a>
+  <a href="#contact" class="mobile-link flex-1 flex flex-col items-center justify-center gap-1 py-3 text-white/60 hover:text-brand transition-colors text-[10px] font-medium uppercase tracking-widest">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Contact
+  </a>
+</nav>
 
 </body>
 </html>
