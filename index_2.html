@@ -279,6 +279,14 @@
 
         <p id="lookupStatus" class="text-sm mt-4 hidden"></p>
 
+        <div id="bdayBanner" class="hidden mt-5 bg-brand/10 border border-brand/30 chamfer-sm px-5 py-4 flex items-center gap-4">
+          <span class="text-3xl" aria-hidden="true">🎂</span>
+          <div>
+            <p class="font-semibold text-brand text-sm">It's your birthday!</p>
+            <p class="text-white/60 text-xs mt-0.5">The whole Trybe is celebrating you today. Have a blessed one.</p>
+          </div>
+        </div>
+
         <form id="profileForm" class="hidden mt-6 grid sm:grid-cols-2 gap-4">
           <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-light/80 border-b border-white/10 pb-2">
             Name · Email · Phone · Birthday
@@ -328,15 +336,13 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
 
-      <div class="reveal flex justify-center order-2 lg:order-1">
-        <svg viewBox="0 0 240 260" class="w-64 sm:w-80 drop-shadow-xl">
-          <path d="M60 20 L95 8 C100 22 120 22 125 8 L160 20 L185 50 L165 70 L165 245 L55 245 L55 70 L35 50 Z"
-                fill="#0A0A0A" stroke="#0A0A0A" stroke-width="2"/>
-          <g transform="translate(120,140)" fill="#0AADA0">
-            <text x="0" y="0" text-anchor="middle" font-family="Unbounded, sans-serif" font-size="22" font-weight="700">TRYBE-G</text>
-            <text x="0" y="22" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" letter-spacing="2">ONE TRIBE · ONE GOD</text>
-          </g>
-        </svg>
+      <div class="reveal order-2 lg:order-1 grid grid-cols-2 gap-3 items-end">
+        <img src="images/merch-2.jpg" alt="TRYBE-G group in tees"
+          class="col-span-2 w-full object-cover chamfer rounded-none aspect-[16/9]" loading="lazy">
+        <img src="images/merch-1.jpg" alt="TRYBE-G members in tees"
+          class="w-full object-cover chamfer-sm aspect-[3/4]" loading="lazy">
+        <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees"
+          class="w-full object-cover chamfer-sm aspect-[3/4]" loading="lazy">
       </div>
 
       <div class="reveal order-1 lg:order-2">
@@ -580,6 +586,24 @@ setInterval(tickCountdown, 1000);
 
 const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+function checkBirthday(dobMonth, dobDay) {
+  if (!dobMonth || !dobDay) return null;
+  const now = new Date();
+  const monthIdx = monthNames.findIndex(m => m.toLowerCase() === dobMonth.toString().toLowerCase());
+  if (monthIdx === -1) return null;
+  const bMonth = monthIdx + 1;
+  const bDay = Number(dobDay);
+  const curMonth = now.getMonth() + 1;
+  const curDay = now.getDate();
+  if (bMonth === curMonth && bDay === curDay) return "today";
+  const bDate = new Date(now.getFullYear(), bMonth - 1, bDay);
+  const today = new Date(now.getFullYear(), curMonth - 1, curDay);
+  let diff = (bDate - today) / (1000 * 60 * 60 * 24);
+  if (diff < 0) diff += 365;
+  if (diff <= 7) return "soon";
+  return null;
+}
+
 function populateSelects() {
   const monthSel = document.getElementById("fieldDobMonth");
   const daySel = document.getElementById("fieldDobDay");
@@ -647,8 +671,22 @@ lookupBtn.addEventListener("click", async () => {
     }
 
     activeMember = { ...member };
-    lookupStatus.textContent = `Record found. Welcome back, ${member.firstName}.`;
-    lookupStatus.className = "text-sm mt-4 text-brand";
+
+    const bdayBanner = document.getElementById("bdayBanner");
+    const bdayCheck = checkBirthday(member.dobMonth, Number(member.dobDay));
+    if (bdayCheck === "today") {
+      lookupStatus.innerHTML = `<span class="text-2xl">🎂</span> Happy Birthday, ${member.firstName}! The Trybe celebrates you today.`;
+      lookupStatus.className = "text-sm mt-4 text-brand font-semibold";
+      bdayBanner.classList.remove("hidden");
+    } else if (bdayCheck === "soon") {
+      lookupStatus.textContent = `Record found. Welcome back, ${member.firstName}. Your birthday is coming up soon!`;
+      lookupStatus.className = "text-sm mt-4 text-brand";
+      bdayBanner.classList.add("hidden");
+    } else {
+      lookupStatus.textContent = `Record found. Welcome back, ${member.firstName}.`;
+      lookupStatus.className = "text-sm mt-4 text-brand";
+      bdayBanner.classList.add("hidden");
+    }
 
     document.getElementById("fieldFirstName").value = member.firstName;
     document.getElementById("fieldLastName").value = member.lastName;
