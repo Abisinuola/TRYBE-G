@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRYBE-G — One Tribe. One God. Global Impact.</title>
+<title>TRYBE-G: One Tribe. One God. Global Impact.</title>
 <meta name="description" content="TRYBE-G is a global movement of young leaders united by God and empowered to transform the world. Join the Trybe.">
 <meta name="theme-color" content="#0A0A0A">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A0A0A'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23FF5A1F' stroke-width='9'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A0A0A'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%230AADA0' stroke-width='9'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,9 +19,9 @@
       extend: {
         colors: {
           ink: '#0A0A0A',
-          inkpanel: '#15130F',
-          paper: '#FBF9F6',
-          brand: { DEFAULT: '#FF5A1F', deep: '#D9420A', amber: '#FFB23F' }
+          inkpanel: '#0D1615',
+          paper: '#F4FFFE',
+          brand: { DEFAULT: '#0AADA0', deep: '#088A7E', light: '#5DDDD5' }
         },
         fontFamily: {
           display: ['Unbounded', 'sans-serif'],
@@ -34,7 +34,6 @@
 </script>
 
 <style>
-  /* ---------- Brand structural device: chamfered (cut-corner) edges, echoing the mark's cut letterforms ---------- */
   .chamfer {
     clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
   }
@@ -45,15 +44,13 @@
     clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   }
 
-  /* ---------- Faint spreadsheet-cell texture for the Profile Sync panel ---------- */
   .sheet-grid {
     background-image:
-      linear-gradient(to right, rgba(255,90,31,0.10) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,90,31,0.10) 1px, transparent 1px);
+      linear-gradient(to right, rgba(10,173,160,0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10,173,160,0.10) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
-  /* ---------- Ambient orbit motion behind hero / countdown ---------- */
   @keyframes spin-slow { to { transform: rotate(360deg); } }
   .spin-slow { animation: spin-slow 70s linear infinite; }
 
@@ -63,7 +60,6 @@
   }
   .drift { animation: drift 4s ease-in-out infinite; }
 
-  /* ---------- Scroll reveal ---------- */
   .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
@@ -72,13 +68,11 @@
     .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
   }
 
-  /* ---------- Focus visibility ---------- */
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 2px solid #FF5A1F;
+    outline: 2px solid #0AADA0;
     outline-offset: 2px;
   }
 
-  /* ---------- Identity compass diagram (desktop) ---------- */
   @media (min-width: 1024px) {
     .identity-grid {
       display: grid;
@@ -101,7 +95,6 @@
 
   html { scroll-behavior: smooth; }
 
-  /* Toast */
   .toast {
     transform: translateY(12px);
     opacity: 0;
@@ -113,7 +106,6 @@
 
 <body class="bg-paper text-ink font-body antialiased">
 
-<!-- ================= SVG SPRITE: TRYBE-G MARK (from official brand files) ================= -->
 <svg width="0" height="0" class="absolute" aria-hidden="true">
   <defs>
     <symbol id="mark" viewBox="0 0 1500 1500">
@@ -131,7 +123,6 @@
   </defs>
 </svg>
 
-<!-- ================= NAV ================= -->
 <header class="fixed top-0 inset-x-0 z-50 bg-ink/95 backdrop-blur border-b border-white/10">
   <div class="max-w-7xl mx-auto px-5 sm:px-8 h-[72px] flex items-center justify-between">
     <a href="#home" class="flex items-center gap-2.5 text-white shrink-0">
@@ -159,7 +150,6 @@
     </button>
   </div>
 
-  <!-- Mobile menu -->
   <div id="mobileMenu" class="hidden lg:hidden bg-ink border-t border-white/10">
     <nav class="flex flex-col px-6 py-5 gap-4 text-white/90 font-medium">
       <a href="#identity" class="mobile-link py-1">Identity</a>
@@ -174,7 +164,6 @@
 
 <main>
 
-<!-- ================= HERO ================= -->
 <section id="home" class="relative bg-ink text-white overflow-hidden pt-[72px]">
   <svg viewBox="0 0 1500 1500" class="spin-slow pointer-events-none absolute -top-32 -right-48 w-[640px] h-[640px] sm:w-[760px] sm:h-[760px] text-brand/10" aria-hidden="true">
     <use href="#mark"/>
@@ -182,8 +171,8 @@
 
   <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 sm:py-32 lg:py-40">
     <div class="max-w-3xl">
-      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-amber border border-brand-amber/30 px-3 py-1.5 chamfer-sm">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
+      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-light border border-brand-light/30 px-3 py-1.5 chamfer-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-light"></span>
         A Global Youth Movement
       </span>
 
@@ -194,7 +183,7 @@
       </h1>
 
       <p class="text-white/70 text-lg sm:text-xl mt-6 max-w-xl leading-relaxed">
-        TRYBE-G is more than a youth ministry — it is a movement of young leaders united by God and empowered to transform the world.
+        TRYBE-G is more than a youth ministry. It is a movement of young leaders united by God and empowered to transform the world.
       </p>
 
       <div class="flex flex-wrap items-center gap-4 mt-10">
@@ -214,7 +203,6 @@
   </div>
 </section>
 
-<!-- ================= IDENTITY ================= -->
 <section id="identity" class="bg-paper py-24 sm:py-28">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="max-w-2xl reveal">
@@ -234,7 +222,7 @@
 
       <div class="area-top reveal bg-white border border-ink/10 p-6 chamfer-sm">
         <h3 class="font-display text-lg text-brand-deep">The Orbital Lines</h3>
-        <p class="text-ink/70 mt-2 leading-relaxed">Global connectivity — influencing communities, industries, and nations.</p>
+        <p class="text-ink/70 mt-2 leading-relaxed">Global connectivity, influencing communities, industries, and nations.</p>
       </div>
 
       <div class="area-left reveal bg-white border border-ink/10 p-6 chamfer-sm">
@@ -244,7 +232,7 @@
 
       <div class="area-right reveal bg-white border border-ink/10 p-6 chamfer-sm">
         <h3 class="font-display text-lg text-brand-deep">Continuous Movement</h3>
-        <p class="text-ink/70 mt-2 leading-relaxed">Growth and transformation — becoming everything God called us to be.</p>
+        <p class="text-ink/70 mt-2 leading-relaxed">Growth and transformation, becoming everything God called us to be.</p>
       </div>
 
       <div class="area-bottom reveal bg-white border border-ink/10 p-6 chamfer-sm">
@@ -255,32 +243,28 @@
   </div>
 </section>
 
-<!-- ================= PORTAL ================= -->
 <section id="portal" class="bg-ink text-white py-24 sm:py-28">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="max-w-2xl reveal">
-      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">Your Place In The Trybe</span>
+      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-light">Your Place In The Trybe</span>
       <h2 class="font-display text-3xl sm:text-4xl mt-3">Two ways in.</h2>
       <p class="text-white/60 mt-4 text-lg leading-relaxed">Get into the group chat, and keep your details current so we can actually reach you.</p>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-7 mt-14">
 
-      <!-- Join WhatsApp -->
       <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10 flex flex-col">
         <div class="absolute top-0 right-0 w-40 h-40 bg-brand/10 rounded-full blur-3xl"></div>
         <svg class="w-10 h-10 text-brand" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.45 5.15L2 22l5.1-1.55a9.8 9.8 0 0 0 4.94 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.92-9.92-9.92zm5.83 13.65c-.25.7-1.45 1.36-2 1.45-.51.08-1.04.11-1.62-.1-.37-.13-.85-.29-1.46-.56-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.63s.66-1.86.9-2.12c.24-.25.51-.32.68-.32h.5c.16 0 .38-.06.59.45.25.6.83 2.06.9 2.22.07.16.12.34.02.54-.31.65-.7 1.04-.9 1.27-.13.15-.27.31-.12.59.6 1.13 1.42 1.97 2.5 2.6 1.08.62 1.45.59 1.7.55.24-.04.78-.31 1-.6.22-.29.45-.24.74-.14.3.1 1.86.88 2.18 1.03.32.16.53.24.6.37.08.13.08.74-.17 1.44z"/></svg>
         <h3 class="font-display text-2xl mt-6">Join the Youth Group</h3>
-        <p class="text-white/60 mt-3 leading-relaxed">Tap in and land straight inside our group chat — connect with the Trybe, hear about meetings first, and grow with people on the same journey.</p>
+        <p class="text-white/60 mt-3 leading-relaxed">Tap in and land straight inside our group chat. Connect with the Trybe, hear about meetings first, and grow with people on the same journey.</p>
 
-        <a id="whatsappBtn" href="https://chat.whatsapp.com/REPLACE_WITH_YOUR_INVITE_LINK" target="_blank" rel="noopener" class="mt-8 inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
+        <a id="whatsappBtn" href="https://chat.whatsapp.com/EUpSCNjqiTO5pIRaxbISqp" target="_blank" rel="noopener" class="mt-8 inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
           Join on WhatsApp
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
-        <p class="text-white/35 text-xs mt-3 font-mono">// owner: set WHATSAPP_LINK in the JS config below</p>
       </div>
 
-      <!-- Profile Sync -->
       <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10 sheet-grid">
         <h3 class="font-display text-2xl">Profile Sync</h3>
         <p class="text-white/60 mt-3 leading-relaxed">Look up your record, then update what's changed.</p>
@@ -292,18 +276,22 @@
             Find My Record
           </button>
         </div>
-        <p class="text-white/30 text-xs font-mono mt-2">Demo mode — try "ada@trybeg.org"</p>
 
         <p id="lookupStatus" class="text-sm mt-4 hidden"></p>
 
         <form id="profileForm" class="hidden mt-6 grid sm:grid-cols-2 gap-4">
-          <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-amber/80 border-b border-white/10 pb-2">
+          <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-light/80 border-b border-white/10 pb-2">
             Name · Email · Phone · Birthday
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="fieldName" class="block text-xs text-white/50 mb-1.5">Name</label>
-            <input id="fieldName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+          <div>
+            <label for="fieldFirstName" class="block text-xs text-white/50 mb-1.5">First Name</label>
+            <input id="fieldFirstName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+          </div>
+
+          <div>
+            <label for="fieldLastName" class="block text-xs text-white/50 mb-1.5">Last Name</label>
+            <input id="fieldLastName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
           </div>
 
           <div>
@@ -317,11 +305,10 @@
           </div>
 
           <div class="sm:col-span-2">
-            <label class="block text-xs text-white/50 mb-1.5">Birthday</label>
-            <div class="grid grid-cols-3 gap-3">
-              <select id="fieldDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
-              <select id="fieldMonth" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
-              <select id="fieldYear" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+            <label class="block text-xs text-white/50 mb-1.5">Date of Birth</label>
+            <div class="grid grid-cols-2 gap-3">
+              <select id="fieldDobMonth" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              <select id="fieldDobDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
             </div>
           </div>
 
@@ -337,7 +324,6 @@
   </div>
 </section>
 
-<!-- ================= MERCH ================= -->
 <section id="merch" class="bg-paper py-24 sm:py-28">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
@@ -346,7 +332,7 @@
         <svg viewBox="0 0 240 260" class="w-64 sm:w-80 drop-shadow-xl">
           <path d="M60 20 L95 8 C100 22 120 22 125 8 L160 20 L185 50 L165 70 L165 245 L55 245 L55 70 L35 50 Z"
                 fill="#0A0A0A" stroke="#0A0A0A" stroke-width="2"/>
-          <g transform="translate(120,140)" fill="#FF5A1F">
+          <g transform="translate(120,140)" fill="#0AADA0">
             <text x="0" y="0" text-anchor="middle" font-family="Unbounded, sans-serif" font-size="22" font-weight="700">TRYBE-G</text>
             <text x="0" y="22" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" letter-spacing="2">ONE TRIBE · ONE GOD</text>
           </g>
@@ -360,7 +346,7 @@
           Coming Soon
         </span>
         <p class="text-ink/60 mt-5 text-lg leading-relaxed max-w-md">
-          The official black-and-orange TRYBE-G tee is in the works. Be the first to know when it drops.
+          The official black-and-teal TRYBE-G tee is in the works. Be the first to know when it drops.
         </p>
 
         <form id="merchForm" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md">
@@ -376,7 +362,6 @@
   </div>
 </section>
 
-<!-- ================= NEXT MEETING ================= -->
 <section id="meeting" class="bg-ink text-white py-24 sm:py-28 relative overflow-hidden">
   <svg viewBox="0 0 1500 1500" class="spin-slow pointer-events-none absolute -bottom-56 -left-56 w-[560px] h-[560px] text-brand/10" aria-hidden="true">
     <use href="#mark"/>
@@ -384,7 +369,7 @@
 
   <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
     <div class="max-w-2xl reveal">
-      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">Next Meeting</span>
+      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-light">Next Meeting</span>
       <h2 class="font-display text-3xl sm:text-4xl mt-3">Same Trybe. Same time.</h2>
       <p id="meetingDetail" class="text-white/60 mt-4 text-lg">Every Friday · 6:00 PM · Trybe Hub</p>
     </div>
@@ -410,7 +395,7 @@
 
     <div class="reveal mt-16 max-w-xl bg-inkpanel border border-white/10 chamfer p-8">
       <h3 class="font-display text-xl">What would you like to see or talk about in our next meeting?</h3>
-      <p class="text-white/50 mt-2 text-sm">Let us know — we read every one of these.</p>
+      <p class="text-white/50 mt-2 text-sm">Let us know. We read every one of these.</p>
       <form id="feedbackForm" class="mt-5">
         <textarea id="feedbackText" required rows="3" placeholder="Type your idea here..."
           class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none resize-none"></textarea>
@@ -424,7 +409,6 @@
 
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer id="contact" class="bg-ink text-white pt-20 pb-10">
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
 
@@ -452,7 +436,7 @@
     <div class="grid sm:grid-cols-2 gap-10 mt-16 pt-12 border-t border-white/10">
       <div class="reveal">
         <h3 class="font-display text-lg">Get in touch</h3>
-        <p class="text-white/50 mt-3 text-sm leading-relaxed">Questions about TRYBE-G, partnerships, or starting a chapter near you — reach out any time.</p>
+        <p class="text-white/50 mt-3 text-sm leading-relaxed">Questions about TRYBE-G, partnerships, or starting a chapter near you. Reach out any time.</p>
         <div class="mt-5 space-y-2 text-sm">
           <p class="flex items-center gap-2 text-white/80">
             <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
@@ -488,15 +472,11 @@
   </div>
 </footer>
 
-<!-- Toast -->
 <div id="toast" class="toast fixed bottom-6 right-6 z-[60] bg-white text-ink font-semibold text-sm px-5 py-3.5 chamfer-sm shadow-2xl border border-ink/10"></div>
 
 <script>
-/* =====================================================================
-   TRYBE-G CONFIG — edit these values for your real deployment
-   ===================================================================== */
 const CONFIG = {
-  WHATSAPP_LINK: "https://chat.whatsapp.com/REPLACE_WITH_YOUR_INVITE_LINK",
+  WHATSAPP_LINK: "https://chat.whatsapp.com/EUpSCNjqiTO5pIRaxbISqp",
   CONTACT_EMAIL: "hello@trybe-g.org",
   VENUE_TEXT: "Trybe Hub · Replace with your venue address",
   SOCIALS: {
@@ -504,13 +484,8 @@ const CONFIG = {
     tiktok: "https://www.tiktok.com/@REPLACE_WITH_HANDLE",
     youtube: "https://youtube.com/@REPLACE_WITH_HANDLE"
   },
-  // Next meeting: dayOfWeek 0=Sun ... 6=Sat. Time is in the visitor's local timezone.
   MEETING: { dayOfWeek: 5, hour: 18, minute: 0, label: "Every Friday · 6:00 PM · Trybe Hub" },
-
-  // ---- Google Sheet sync ----
-  // Set this to false once your Google Apps Script Web App is deployed,
-  // and put its /exec URL below. See google-apps-script.gs + README.md.
-  USE_MOCK_DATA: true,
+  USE_MOCK_DATA: false,
   SHEETS_API_URL: "https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec"
 };
 
@@ -522,9 +497,6 @@ document.getElementById("venueText").textContent = CONFIG.VENUE_TEXT;
 document.getElementById("meetingDetail").textContent = CONFIG.MEETING.label;
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* ---------------------------------------------------------------------
-   Mobile menu
---------------------------------------------------------------------- */
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 const iconOpen = document.getElementById("menuIconOpen");
@@ -545,9 +517,6 @@ document.querySelectorAll(".mobile-link").forEach(link => {
   });
 });
 
-/* ---------------------------------------------------------------------
-   Scroll reveal
---------------------------------------------------------------------- */
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -558,9 +527,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-/* ---------------------------------------------------------------------
-   Toast utility
---------------------------------------------------------------------- */
 let toastTimer = null;
 function toast(message) {
   const el = document.getElementById("toast");
@@ -570,9 +536,6 @@ function toast(message) {
   toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
 }
 
-/* ---------------------------------------------------------------------
-   Countdown to next meeting
---------------------------------------------------------------------- */
 function getNextMeetingDate() {
   const { dayOfWeek, hour, minute } = CONFIG.MEETING;
   const now = new Date();
@@ -606,57 +569,25 @@ function tickCountdown() {
 tickCountdown();
 setInterval(tickCountdown, 1000);
 
-/* ---------------------------------------------------------------------
-   Birthday selects: Day / Month / Year
---------------------------------------------------------------------- */
 const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 function populateSelects() {
-  const daySel = document.getElementById("fieldDay");
-  const monthSel = document.getElementById("fieldMonth");
-  const yearSel = document.getElementById("fieldYear");
+  const monthSel = document.getElementById("fieldDobMonth");
+  const daySel = document.getElementById("fieldDobDay");
+
+  monthSel.innerHTML = '<option value="">Month</option>' +
+    monthNames.map(m => `<option value="${m}">${m}</option>`).join("");
 
   daySel.innerHTML = '<option value="">Day</option>' +
     Array.from({ length: 31 }, (_, i) => i + 1).map(d => `<option value="${d}">${d}</option>`).join("");
-
-  monthSel.innerHTML = '<option value="">Month</option>' +
-    monthNames.map((m, i) => `<option value="${i + 1}">${m}</option>`).join("");
-
-  const thisYear = new Date().getFullYear();
-  const years = [];
-  for (let y = thisYear - 10; y >= thisYear - 80; y--) years.push(y);
-  yearSel.innerHTML = '<option value="">Year</option>' +
-    years.map(y => `<option value="${y}">${y}</option>`).join("");
 }
 populateSelects();
-
-/* =====================================================================
-   GOOGLE SHEET MEMBER SYNC
-
-   USE_MOCK_DATA = true  -> uses the in-memory MOCK_MEMBERS array below,
-   so this demo works instantly with no backend.
-
-   USE_MOCK_DATA = false -> calls your Google Apps Script Web App
-   (see google-apps-script.gs and README.md for the matching backend).
-   ===================================================================== */
-let MOCK_MEMBERS = [
-  { id: 1, name: "Ada Lovelace",  email: "ada@trybeg.org",    phone: "+2348012345678", day: 12, month: 4,  year: 2002 },
-  { id: 2, name: "Kemi Adeyemi",  email: "kemi@trybeg.org",   phone: "+2348098765432", day: 30, month: 11, year: 2000 },
-  { id: 3, name: "Daniel Owusu",  email: "daniel@trybeg.org", phone: "+233244000111",  day: 5,  month: 1,  year: 2003 }
-];
 
 function normalize(str) {
   return (str || "").toString().trim().toLowerCase();
 }
 
 async function findMember(query) {
-  if (CONFIG.USE_MOCK_DATA) {
-    await new Promise(r => setTimeout(r, 500)); // simulate network latency
-    const q = normalize(query);
-    const found = MOCK_MEMBERS.find(m => normalize(m.email) === q || normalize(m.phone).replace(/\s/g, "") === q.replace(/\s/g, ""));
-    return found || null;
-  }
-
-  // ---- Real Google Apps Script call (used when USE_MOCK_DATA = false) ----
   const url = `${CONFIG.SHEETS_API_URL}?action=search&query=${encodeURIComponent(query)}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -664,17 +595,9 @@ async function findMember(query) {
 }
 
 async function saveMember(member) {
-  if (CONFIG.USE_MOCK_DATA) {
-    await new Promise(r => setTimeout(r, 500));
-    const idx = MOCK_MEMBERS.findIndex(m => m.id === member.id);
-    if (idx > -1) MOCK_MEMBERS[idx] = member;
-    return { success: true };
-  }
-
-  // ---- Real Google Apps Script call (used when USE_MOCK_DATA = false) ----
   const res = await fetch(CONFIG.SHEETS_API_URL, {
     method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on Apps Script
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify({ action: "update", member })
   });
   return res.json();
@@ -690,7 +613,7 @@ lookupBtn.addEventListener("click", async () => {
   const query = lookupInput.value.trim();
   if (!query) {
     lookupStatus.textContent = "Enter your email or phone number first.";
-    lookupStatus.className = "text-sm mt-4 text-brand-amber";
+    lookupStatus.className = "text-sm mt-4 text-brand-light";
     return;
   }
 
@@ -700,31 +623,38 @@ lookupBtn.addEventListener("click", async () => {
   lookupStatus.textContent = "Searching the sheet...";
   lookupStatus.className = "text-sm mt-4 text-white/50";
 
-  const member = await findMember(query);
+  try {
+    const member = await findMember(query);
 
-  lookupBtn.disabled = false;
-  lookupBtn.textContent = "Find My Record";
+    lookupBtn.disabled = false;
+    lookupBtn.textContent = "Find My Record";
 
-  if (!member) {
-    activeMember = null;
-    profileForm.classList.add("hidden");
-    lookupStatus.textContent = "No match found — double check the email or phone number you joined with.";
-    lookupStatus.className = "text-sm mt-4 text-brand-amber";
-    return;
+    if (!member) {
+      activeMember = null;
+      profileForm.classList.add("hidden");
+      lookupStatus.textContent = "No match found. Double check the email or phone number you joined with.";
+      lookupStatus.className = "text-sm mt-4 text-brand-light";
+      return;
+    }
+
+    activeMember = { ...member };
+    lookupStatus.textContent = `Record found. Welcome back, ${member.firstName}.`;
+    lookupStatus.className = "text-sm mt-4 text-brand";
+
+    document.getElementById("fieldFirstName").value = member.firstName;
+    document.getElementById("fieldLastName").value = member.lastName;
+    document.getElementById("fieldEmail").value = member.email;
+    document.getElementById("fieldPhone").value = member.phone;
+    document.getElementById("fieldDobMonth").value = member.dobMonth;
+    document.getElementById("fieldDobDay").value = member.dobDay;
+
+    profileForm.classList.remove("hidden");
+  } catch (err) {
+    lookupBtn.disabled = false;
+    lookupBtn.textContent = "Find My Record";
+    lookupStatus.textContent = "Could not connect. Please try again shortly.";
+    lookupStatus.className = "text-sm mt-4 text-brand-light";
   }
-
-  activeMember = { ...member };
-  lookupStatus.textContent = `Record found — welcome back, ${member.name.split(" ")[0]}.`;
-  lookupStatus.className = "text-sm mt-4 text-brand";
-
-  document.getElementById("fieldName").value = member.name;
-  document.getElementById("fieldEmail").value = member.email;
-  document.getElementById("fieldPhone").value = member.phone;
-  document.getElementById("fieldDay").value = member.day;
-  document.getElementById("fieldMonth").value = member.month;
-  document.getElementById("fieldYear").value = member.year;
-
-  profileForm.classList.remove("hidden");
 });
 
 lookupInput.addEventListener("keydown", (e) => {
@@ -737,52 +667,48 @@ profileForm.addEventListener("submit", async (e) => {
 
   const updated = {
     ...activeMember,
-    name: document.getElementById("fieldName").value.trim(),
+    firstName: document.getElementById("fieldFirstName").value.trim(),
+    lastName: document.getElementById("fieldLastName").value.trim(),
     email: document.getElementById("fieldEmail").value.trim(),
     phone: document.getElementById("fieldPhone").value.trim(),
-    day: Number(document.getElementById("fieldDay").value),
-    month: Number(document.getElementById("fieldMonth").value),
-    year: Number(document.getElementById("fieldYear").value)
+    dobMonth: document.getElementById("fieldDobMonth").value,
+    dobDay: Number(document.getElementById("fieldDobDay").value)
   };
 
   const submitBtn = profileForm.querySelector("button[type=submit]");
   submitBtn.disabled = true;
   submitBtn.textContent = "Saving...";
 
-  const result = await saveMember(updated);
+  try {
+    const result = await saveMember(updated);
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Save Changes";
 
-  submitBtn.disabled = false;
-  submitBtn.textContent = "Save Changes";
-
-  if (result && result.success) {
-    activeMember = updated;
-    toast("Changes saved.");
-  } else {
-    toast("Couldn't save right now — try again.");
+    if (result && result.success) {
+      activeMember = updated;
+      toast("Changes saved.");
+    } else {
+      toast("Couldn't save right now. Try again.");
+    }
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Save Changes";
+    toast("Couldn't save right now. Try again.");
   }
 });
 
-/* ---------------------------------------------------------------------
-   Merch notify form
---------------------------------------------------------------------- */
 document.getElementById("merchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   toast("You're on the list.");
   e.target.reset();
 });
 
-/* ---------------------------------------------------------------------
-   Meeting feedback form
---------------------------------------------------------------------- */
 document.getElementById("feedbackForm").addEventListener("submit", (e) => {
   e.preventDefault();
-  toast("Thanks — we hear you.");
+  toast("Thanks. We hear you.");
   e.target.reset();
 });
 
-/* ---------------------------------------------------------------------
-   Contact form
---------------------------------------------------------------------- */
 document.getElementById("contactForm").addEventListener("submit", (e) => {
   e.preventDefault();
   toast("Message sent.");
