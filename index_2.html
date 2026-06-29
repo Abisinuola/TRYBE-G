@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRYBE-G — One Tribe. One God. Global Impact.</title>
+<meta name="description" content="TRYBE-G is a global movement of young leaders united by God and empowered to transform the world. Join the Trybe.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A0A0A'/%3E%3Ccircle cx='50' cy='50' r='26' fill='none' stroke='%23FF5A1F' stroke-width='9'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0A0A0A',
+          inkpanel: '#15130F',
+          paper: '#FBF9F6',
+          brand: { DEFAULT: '#FF5A1F', deep: '#D9420A', amber: '#FFB23F' }
+        },
+        fontFamily: {
+          display: ['Unbounded', 'sans-serif'],
+          body: ['"Plus Jakarta Sans"', 'sans-serif'],
+          mono: ['"Space Mono"', 'monospace']
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  /* ---------- Brand structural device: chamfered (cut-corner) edges, echoing the mark's cut letterforms ---------- */
+  .chamfer {
+    clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  }
+  .chamfer-sm {
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  .chamfer-tile {
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  }
+
+  /* ---------- Faint spreadsheet-cell texture for the Profile Sync panel ---------- */
+  .sheet-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,90,31,0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,90,31,0.10) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ---------- Ambient orbit motion behind hero / countdown ---------- */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .spin-slow { animation: spin-slow 70s linear infinite; }
+
+  @keyframes drift {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .drift { animation: drift 4s ease-in-out infinite; }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin-slow, .drift { animation: none !important; }
+    .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* ---------- Focus visibility ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid #FF5A1F;
+    outline-offset: 2px;
+  }
+
+  /* ---------- Identity compass diagram (desktop) ---------- */
+  @media (min-width: 1024px) {
+    .identity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr 1fr;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        ".    top    ."
+        "left center right"
+        ".    bottom .";
+      column-gap: 1.75rem;
+      row-gap: 1.75rem;
+      align-items: center;
+    }
+    .area-top { grid-area: top; }
+    .area-left { grid-area: left; }
+    .area-right { grid-area: right; }
+    .area-bottom { grid-area: bottom; }
+    .area-center { grid-area: center; }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  /* Toast */
+  .toast {
+    transform: translateY(12px);
+    opacity: 0;
+    transition: transform .35s ease, opacity .35s ease;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+<!-- ================= SVG SPRITE: TRYBE-G MARK (from official brand files) ================= -->
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 1500 1500">
+      <g fill="currentColor">
+        <polygon points="316.64 747.95 316.64 882.56 360.82 882.56 360.82 747.95 394.76 747.95 394.76 709.35 316.64 709.35 316.64 747.95"/>
+        <path d="M507.06,800.96c4.88-8.14,8.14-18.37,8.14-32.09,0-19.06-6.04-36.04-20.92-46.96-9.53-7.44-26.5-12.79-53.94-12.79h-32.55v39.29h36.73c6.05,0,13.02,1.39,18.37,4.88,5.35,3.49,10.23,10.93,10.23,19.76,0,9.53-4.88,18.37-10.23,21.85-5.35,3.26-15.58,4.65-26.5,4.65h-16.27l54.4,83.7h45.57l-36.04-63.94c8.14-3.49,16.97-9.53,23.02-18.37Z"/>
+        <polygon points="590.29 779.33 564.01 708.89 515.89 708.89 568.2 819.79 568.2 883.26 613.07 883.26 613.07 819.79 664.69 708.89 616.56 708.89 590.29 779.33"/>
+        <path d="M773.25,789.56c14.18-8.14,20.92-21.62,20.92-35.11,0-14.88-5.35-26.27-16.04-33.71-9.53-8.14-24.41-12.32-41.85-12.32h-58.12v39.29h53.94c4.18,0,8.83,0,12.09,1.86,4.18,1.4,6.74,4.88,6.74,11.62s-2.56,10-6.74,12.09c-3.95,2.09-8.6,2.09-12.09,2.09h-53.94v36.97h59.29c3.49,0,9.53,0,13.48,2.09,4.88,1.39,8.84,5.35,8.84,12.79,0,8.84-3.95,12.79-8.84,14.88-4.65,2.09-10.69,2.09-13.48,2.09h-59.29v39.06h51.38c28.83,0,41.15-1.4,56.5-14.88,10.93-8.83,16.28-24.18,16.28-38.36,0-6.74-.7-30.46-29.06-40.45Z"/>
+        <polygon points="814.63 883.49 925.54 883.49 925.54 866.29 925.54 844.43 925.54 826.07 889.96 826.07 889.96 844.43 857.18 844.43 857.18 812.35 894.15 811.65 894.15 779.33 857.88 779.33 857.88 747.95 889.96 747.95 889.96 763.06 925.54 763.06 925.54 747.95 925.54 722.6 925.54 708.19 814.63 708.19 814.63 883.49"/>
+        <path d="M1152.49,717.21h-66.96c-49.29,0-89.28,35.81-89.28,86.03s37.9,87.88,88.58,87.88c8.83,0,27.9-1.39,37.9-3.95l60.91-94.86h-108.81l34.41,34.41h15.58l-14.18,19.76c-6.74,4.65-15.58,7.44-25.81,7.44-20.92,0-46.03-15.58-46.03-50.68,0-33.25,25.11-48.83,46.03-48.83h.7l66.96.7v12.79h33.94v-50.68h-33.94Z"/>
+        <rect x="932.85" y="779.33" width="51.64" height="33.01"/>
+        <path d="M1236.53,329.99l-.76-.6c-54.24-42.01-119.23-67.2-184.44-82.33-76.85-88.99-164.03-129.71-260.32-121.38l-.97.09c-143.21,12.02-271.19,110.39-354.98,183.35-5.63,4.87-11.17,9.84-16.68,14.92-143.21,79.22-231.81,196.03-256.27,338.02-6.33,39.93-6.87,78.52-2.72,115.6-17.44,116.57,4.45,225.45,64.96,319.38,86.54,130.4,222.88,187.25,358.67,207.65,56.73,30.81,111.7,51.25,167.27,62.48,26.7,5.51,52.94,8.23,78.67,8.23,55.7,0,108.94-12.87,158.98-38.47,49.13-25.15,94.5-62.93,133.58-110.91,4.39-2.45,8.72-5,12.99-7.57,74.04-44.41,126.04-106.01,154.56-183.04,24.64-66.56,30.6-144.36,17.41-225.78,5.12-18.34,9.99-36.45,14.71-54.18,51.97-198.93,23.46-342.11-84.67-425.45ZM1146.24,1160.08c-11.5,18.49-23.7,35.78-36.57,51.79-84.24,46.92-186.71,73.04-320.53,81.91-61.9,4-131.01,3.51-200.27-6.6-46.22-25.37-93.75-57.85-143.9-98.17-116.18-93.72-245.67-234.81-267.01-409.22,23.97-161.64,122.35-322.56,250.45-440.37,116.51-64.72,259.08-97.32,397.08-97.32,8.11,0,16.22.12,24.31.33,55.45,1.48,123.59,5.78,191.55,20.95,29.45,34.81,57.36,77.1,83.73,126.83,63.39,120.69,133.34,261.65,160.95,407.86.67,3.54,1.3,7.08,1.91,10.59-32.57,116.81-74.43,243.22-141.69,351.41ZM180.05,665.02c20.31-117.69,86.45-211.1,177.69-279.82-77.64,86.09-138.55,186.73-172.45,286.87-3.42,10.11-6.57,20.19-9.44,30.21.82-12.29,2.24-24.7,4.21-37.26ZM753.91,1349.36c-39.17-7.93-78.1-20.58-117.66-38.47,27.79,2.36,55.27,3.39,82.03,3.39,24.79,0,48.92-.88,72.07-2.36,115.42-7.63,208.2-28,286.45-63.26-88.87,89.14-202.26,125.5-322.89,100.71ZM1303.61,750.8c-1.63,6.14-3.27,12.32-4.96,18.55-30.88-139.48-97.14-272.7-157.5-387.61-22.37-42.23-45.92-79.28-70.56-111.15,54.94,15.01,108.58,37.96,154.01,73.13l.73.57c101.92,78.52,128.25,215.31,78.28,406.5Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================= NAV ================= -->
+<header class="fixed top-0 inset-x-0 z-50 bg-ink/95 backdrop-blur border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 h-[72px] flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-2.5 text-white shrink-0">
+      <svg viewBox="0 0 1500 1500" class="w-8 h-8 text-brand"><use href="#mark"/></svg>
+      <span class="font-display text-lg tracking-wide">TRYBE-G</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-white/80">
+      <a href="#identity" class="hover:text-brand transition-colors">Identity</a>
+      <a href="#portal" class="hover:text-brand transition-colors">Portal</a>
+      <a href="#merch" class="hover:text-brand transition-colors">Merch</a>
+      <a href="#meeting" class="hover:text-brand transition-colors">Next Meeting</a>
+      <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
+    </nav>
+
+    <div class="hidden lg:block">
+      <a href="#portal" class="inline-flex items-center bg-brand hover:bg-brand-deep text-white font-semibold text-sm px-5 py-2.5 chamfer-sm transition-colors">
+        Join the Trybe
+      </a>
+    </div>
+
+    <button id="menuBtn" aria-label="Open menu" aria-expanded="false" class="lg:hidden text-white p-2 -mr-2">
+      <svg id="menuIconOpen" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="menuIconClose" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden lg:hidden bg-ink border-t border-white/10">
+    <nav class="flex flex-col px-6 py-5 gap-4 text-white/90 font-medium">
+      <a href="#identity" class="mobile-link py-1">Identity</a>
+      <a href="#portal" class="mobile-link py-1">Portal</a>
+      <a href="#merch" class="mobile-link py-1">Merch</a>
+      <a href="#meeting" class="mobile-link py-1">Next Meeting</a>
+      <a href="#contact" class="mobile-link py-1">Contact</a>
+      <a href="#portal" class="mobile-link mt-2 inline-flex justify-center bg-brand text-white font-semibold px-5 py-3 chamfer-sm">Join the Trybe</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section id="home" class="relative bg-ink text-white overflow-hidden pt-[72px]">
+  <svg viewBox="0 0 1500 1500" class="spin-slow pointer-events-none absolute -top-32 -right-48 w-[640px] h-[640px] sm:w-[760px] sm:h-[760px] text-brand/10" aria-hidden="true">
+    <use href="#mark"/>
+  </svg>
+
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8 py-24 sm:py-32 lg:py-40">
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-amber border border-brand-amber/30 px-3 py-1.5 chamfer-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
+        A Global Youth Movement
+      </span>
+
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl leading-[1.08] mt-7">
+        <span class="text-white">One Tribe.</span>
+        <span class="text-brand"> One God.</span>
+        <span class="text-white"> Global Impact.</span>
+      </h1>
+
+      <p class="text-white/70 text-lg sm:text-xl mt-6 max-w-xl leading-relaxed">
+        TRYBE-G is more than a youth ministry — it is a movement of young leaders united by God and empowered to transform the world.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 mt-10">
+        <a href="#portal" id="heroJoinBtn" class="inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-deep text-white font-semibold px-7 py-4 chamfer transition-colors">
+          Join the Trybe
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#identity" class="inline-flex items-center justify-center gap-2 border border-white/25 hover:border-white/50 text-white font-semibold px-7 py-4 chamfer transition-colors">
+          What We're About
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-6 inset-x-0 flex justify-center drift">
+    <svg class="w-5 h-5 text-white/40" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  </div>
+</section>
+
+<!-- ================= IDENTITY ================= -->
+<section id="identity" class="bg-paper py-24 sm:py-28">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="max-w-2xl reveal">
+      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-deep">The Mark</span>
+      <h2 class="font-display text-3xl sm:text-4xl mt-3">Every line in our mark means something.</h2>
+      <p class="text-ink/60 mt-4 text-lg leading-relaxed">
+        The TRYBE-G symbol isn't decoration. Each part of it carries a piece of who we are.
+      </p>
+    </div>
+
+    <div class="identity-grid mt-16">
+      <div class="area-center reveal flex justify-center">
+        <div class="bg-ink chamfer w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+          <svg viewBox="0 0 1500 1500" class="w-44 h-44 sm:w-48 sm:h-48 text-brand"><use href="#mark"/></svg>
+        </div>
+      </div>
+
+      <div class="area-top reveal bg-white border border-ink/10 p-6 chamfer-sm">
+        <h3 class="font-display text-lg text-brand-deep">The Orbital Lines</h3>
+        <p class="text-ink/70 mt-2 leading-relaxed">Global connectivity — influencing communities, industries, and nations.</p>
+      </div>
+
+      <div class="area-left reveal bg-white border border-ink/10 p-6 chamfer-sm">
+        <h3 class="font-display text-lg text-brand-deep">The Circle</h3>
+        <p class="text-ink/70 mt-2 leading-relaxed">Oneness, belonging, fellowship, and family. We are one tribe connected by faith and purpose.</p>
+      </div>
+
+      <div class="area-right reveal bg-white border border-ink/10 p-6 chamfer-sm">
+        <h3 class="font-display text-lg text-brand-deep">Continuous Movement</h3>
+        <p class="text-ink/70 mt-2 leading-relaxed">Growth and transformation — becoming everything God called us to be.</p>
+      </div>
+
+      <div class="area-bottom reveal bg-white border border-ink/10 p-6 chamfer-sm">
+        <h3 class="font-display text-lg text-brand-deep">The Center</h3>
+        <p class="text-ink/70 mt-2 leading-relaxed">Christ is the source of our identity, our purpose, and our impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTAL ================= -->
+<section id="portal" class="bg-ink text-white py-24 sm:py-28">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="max-w-2xl reveal">
+      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">Your Place In The Trybe</span>
+      <h2 class="font-display text-3xl sm:text-4xl mt-3">Two ways in.</h2>
+      <p class="text-white/60 mt-4 text-lg leading-relaxed">Get into the group chat, and keep your details current so we can actually reach you.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-7 mt-14">
+
+      <!-- Join WhatsApp -->
+      <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10 flex flex-col">
+        <div class="absolute top-0 right-0 w-40 h-40 bg-brand/10 rounded-full blur-3xl"></div>
+        <svg class="w-10 h-10 text-brand" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.45 5.15L2 22l5.1-1.55a9.8 9.8 0 0 0 4.94 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.92-9.92-9.92zm5.83 13.65c-.25.7-1.45 1.36-2 1.45-.51.08-1.04.11-1.62-.1-.37-.13-.85-.29-1.46-.56-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.63s.66-1.86.9-2.12c.24-.25.51-.32.68-.32h.5c.16 0 .38-.06.59.45.25.6.83 2.06.9 2.22.07.16.12.34.02.54-.31.65-.7 1.04-.9 1.27-.13.15-.27.31-.12.59.6 1.13 1.42 1.97 2.5 2.6 1.08.62 1.45.59 1.7.55.24-.04.78-.31 1-.6.22-.29.45-.24.74-.14.3.1 1.86.88 2.18 1.03.32.16.53.24.6.37.08.13.08.74-.17 1.44z"/></svg>
+        <h3 class="font-display text-2xl mt-6">Join the Youth Group</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Tap in and land straight inside our group chat — connect with the Trybe, hear about meetings first, and grow with people on the same journey.</p>
+
+        <a id="whatsappBtn" href="https://chat.whatsapp.com/REPLACE_WITH_YOUR_INVITE_LINK" target="_blank" rel="noopener" class="mt-8 inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
+          Join on WhatsApp
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <p class="text-white/35 text-xs mt-3 font-mono">// owner: set WHATSAPP_LINK in the JS config below</p>
+      </div>
+
+      <!-- Profile Sync -->
+      <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10 sheet-grid">
+        <h3 class="font-display text-2xl">Profile Sync</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Look up your record, then update what's changed.</p>
+
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <input id="lookupInput" type="text" placeholder="Email or phone number" autocomplete="off"
+            class="flex-1 bg-ink/60 border border-white/15 px-4 py-3.5 text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none">
+          <button id="lookupBtn" class="bg-white text-ink font-semibold px-6 py-3.5 chamfer-sm hover:bg-brand hover:text-white transition-colors whitespace-nowrap">
+            Find My Record
+          </button>
+        </div>
+        <p class="text-white/30 text-xs font-mono mt-2">Demo mode — try "ada@trybeg.org"</p>
+
+        <p id="lookupStatus" class="text-sm mt-4 hidden"></p>
+
+        <form id="profileForm" class="hidden mt-6 grid sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-amber/80 border-b border-white/10 pb-2">
+            Name · Email · Phone · Birthday
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="fieldName" class="block text-xs text-white/50 mb-1.5">Name</label>
+            <input id="fieldName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+          </div>
+
+          <div>
+            <label for="fieldEmail" class="block text-xs text-white/50 mb-1.5">Email</label>
+            <input id="fieldEmail" type="email" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+          </div>
+
+          <div>
+            <label for="fieldPhone" class="block text-xs text-white/50 mb-1.5">Phone Number</label>
+            <input id="fieldPhone" type="tel" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="block text-xs text-white/50 mb-1.5">Birthday</label>
+            <div class="grid grid-cols-3 gap-3">
+              <select id="fieldDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              <select id="fieldMonth" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              <select id="fieldYear" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+            </div>
+          </div>
+
+          <div class="sm:col-span-2 mt-2">
+            <button type="submit" class="w-full bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= MERCH ================= -->
+<section id="merch" class="bg-paper py-24 sm:py-28">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <div class="reveal flex justify-center order-2 lg:order-1">
+        <svg viewBox="0 0 240 260" class="w-64 sm:w-80 drop-shadow-xl">
+          <path d="M60 20 L95 8 C100 22 120 22 125 8 L160 20 L185 50 L165 70 L165 245 L55 245 L55 70 L35 50 Z"
+                fill="#0A0A0A" stroke="#0A0A0A" stroke-width="2"/>
+          <g transform="translate(120,140)" fill="#FF5A1F">
+            <text x="0" y="0" text-anchor="middle" font-family="Unbounded, sans-serif" font-size="22" font-weight="700">TRYBE-G</text>
+            <text x="0" y="22" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" letter-spacing="2">ONE TRIBE · ONE GOD</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="reveal order-1 lg:order-2">
+        <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-deep">Trybe Merch</span>
+        <h2 class="font-display text-3xl sm:text-4xl mt-3">Get Your Trybe T-Shirt</h2>
+        <span class="inline-flex items-center gap-2 mt-4 bg-ink text-white font-mono text-xs uppercase tracking-widest px-3 py-1.5 chamfer-sm">
+          Coming Soon
+        </span>
+        <p class="text-ink/60 mt-5 text-lg leading-relaxed max-w-md">
+          The official black-and-orange TRYBE-G tee is in the works. Be the first to know when it drops.
+        </p>
+
+        <form id="merchForm" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md">
+          <input id="merchEmail" type="email" required placeholder="you@email.com"
+            class="flex-1 bg-white border border-ink/15 px-4 py-3.5 chamfer-sm focus:border-brand outline-none">
+          <button type="submit" class="bg-ink hover:bg-brand text-white font-semibold px-6 py-3.5 chamfer-sm transition-colors whitespace-nowrap">
+            Notify Me
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEXT MEETING ================= -->
+<section id="meeting" class="bg-ink text-white py-24 sm:py-28 relative overflow-hidden">
+  <svg viewBox="0 0 1500 1500" class="spin-slow pointer-events-none absolute -bottom-56 -left-56 w-[560px] h-[560px] text-brand/10" aria-hidden="true">
+    <use href="#mark"/>
+  </svg>
+
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="max-w-2xl reveal">
+      <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-amber">Next Meeting</span>
+      <h2 class="font-display text-3xl sm:text-4xl mt-3">Same Trybe. Same time.</h2>
+      <p id="meetingDetail" class="text-white/60 mt-4 text-lg">Every Friday · 6:00 PM · Trybe Hub</p>
+    </div>
+
+    <div class="reveal grid grid-cols-4 gap-3 sm:gap-5 mt-12 max-w-xl">
+      <div class="bg-inkpanel border border-white/10 chamfer-tile py-6 text-center">
+        <div id="cdDays" class="font-mono text-3xl sm:text-4xl text-brand">00</div>
+        <div class="text-[11px] uppercase tracking-widest text-white/40 mt-2">Days</div>
+      </div>
+      <div class="bg-inkpanel border border-white/10 chamfer-tile py-6 text-center">
+        <div id="cdHours" class="font-mono text-3xl sm:text-4xl text-brand">00</div>
+        <div class="text-[11px] uppercase tracking-widest text-white/40 mt-2">Hrs</div>
+      </div>
+      <div class="bg-inkpanel border border-white/10 chamfer-tile py-6 text-center">
+        <div id="cdMinutes" class="font-mono text-3xl sm:text-4xl text-brand">00</div>
+        <div class="text-[11px] uppercase tracking-widest text-white/40 mt-2">Min</div>
+      </div>
+      <div class="bg-inkpanel border border-white/10 chamfer-tile py-6 text-center">
+        <div id="cdSeconds" class="font-mono text-3xl sm:text-4xl text-brand">00</div>
+        <div class="text-[11px] uppercase tracking-widest text-white/40 mt-2">Sec</div>
+      </div>
+    </div>
+
+    <div class="reveal mt-16 max-w-xl bg-inkpanel border border-white/10 chamfer p-8">
+      <h3 class="font-display text-xl">What would you like to see or talk about in our next meeting?</h3>
+      <p class="text-white/50 mt-2 text-sm">Let us know — we read every one of these.</p>
+      <form id="feedbackForm" class="mt-5">
+        <textarea id="feedbackText" required rows="3" placeholder="Type your idea here..."
+          class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none resize-none"></textarea>
+        <button type="submit" class="mt-4 bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-3.5 chamfer-sm transition-colors">
+          Send It
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact" class="bg-ink text-white pt-20 pb-10">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+
+    <div class="flex flex-col items-center text-center reveal">
+      <svg viewBox="0 0 1500 1500" class="w-14 h-14 text-white"><use href="#mark"/></svg>
+      <p class="font-display text-lg mt-4">TRYBE-G</p>
+      <p class="text-white/50 mt-1 text-sm">One Tribe. One God. Global Impact.</p>
+
+      <div class="flex items-center gap-4 mt-6">
+        <a href="https://instagram.com/REPLACE_WITH_HANDLE" target="_blank" rel="noopener" aria-label="Instagram"
+          class="w-11 h-11 flex items-center justify-center border border-white/20 chamfer-sm hover:bg-brand hover:border-brand transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@REPLACE_WITH_HANDLE" target="_blank" rel="noopener" aria-label="TikTok"
+          class="w-11 h-11 flex items-center justify-center border border-white/20 chamfer-sm hover:bg-brand hover:border-brand transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 3c.4 2.4 2 4.1 4.5 4.3v3.1c-1.6.1-3-.4-4.5-1.3v6.4a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.2a2.4 2.4 0 1 0 1.7 2.3V3h3z"/></svg>
+        </a>
+        <a href="https://youtube.com/@REPLACE_WITH_HANDLE" target="_blank" rel="noopener" aria-label="YouTube"
+          class="w-11 h-11 flex items-center justify-center border border-white/20 chamfer-sm hover:bg-brand hover:border-brand transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M10.5 10l4 2-4 2v-4z" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-10 mt-16 pt-12 border-t border-white/10">
+      <div class="reveal">
+        <h3 class="font-display text-lg">Get in touch</h3>
+        <p class="text-white/50 mt-3 text-sm leading-relaxed">Questions about TRYBE-G, partnerships, or starting a chapter near you — reach out any time.</p>
+        <div class="mt-5 space-y-2 text-sm">
+          <p class="flex items-center gap-2 text-white/80">
+            <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+            <a id="contactEmailLink" href="mailto:hello@trybe-g.org" class="hover:text-brand">hello@trybe-g.org</a>
+          </p>
+          <p class="flex items-center gap-2 text-white/80">
+            <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.66 17.66a8 8 0 1 0-11.32 0L12 23l5.66-5.34z"/><circle cx="12" cy="11" r="2.5"/></svg>
+            <span id="venueText">Trybe Hub · Replace with your venue address</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h3 class="font-display text-lg">Send a message</h3>
+        <form id="contactForm" class="mt-4 space-y-3">
+          <input id="contactName" type="text" required placeholder="Your name"
+            class="w-full bg-inkpanel border border-white/15 px-4 py-3 text-sm text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none">
+          <input id="contactEmail" type="email" required placeholder="Your email"
+            class="w-full bg-inkpanel border border-white/15 px-4 py-3 text-sm text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none">
+          <textarea id="contactMessage" required rows="2" placeholder="Your message"
+            class="w-full bg-inkpanel border border-white/15 px-4 py-3 text-sm text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none resize-none"></textarea>
+          <button type="submit" class="bg-brand hover:bg-brand-deep text-white font-semibold text-sm px-5 py-3 chamfer-sm transition-colors">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/35">
+      <p>© <span id="year"></span> TRYBE-G. Built for the Trybe.</p>
+      <p class="font-mono">ONE TRIBE · ONE GOD · GLOBAL IMPACT</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast fixed bottom-6 right-6 z-[60] bg-white text-ink font-semibold text-sm px-5 py-3.5 chamfer-sm shadow-2xl border border-ink/10"></div>
+
+<script>
+/* =====================================================================
+   TRYBE-G CONFIG — edit these values for your real deployment
+   ===================================================================== */
+const CONFIG = {
+  WHATSAPP_LINK: "https://chat.whatsapp.com/REPLACE_WITH_YOUR_INVITE_LINK",
+  CONTACT_EMAIL: "hello@trybe-g.org",
+  VENUE_TEXT: "Trybe Hub · Replace with your venue address",
+  SOCIALS: {
+    instagram: "https://instagram.com/REPLACE_WITH_HANDLE",
+    tiktok: "https://www.tiktok.com/@REPLACE_WITH_HANDLE",
+    youtube: "https://youtube.com/@REPLACE_WITH_HANDLE"
+  },
+  // Next meeting: dayOfWeek 0=Sun ... 6=Sat. Time is in the visitor's local timezone.
+  MEETING: { dayOfWeek: 5, hour: 18, minute: 0, label: "Every Friday · 6:00 PM · Trybe Hub" },
+
+  // ---- Google Sheet sync ----
+  // Set this to false once your Google Apps Script Web App is deployed,
+  // and put its /exec URL below. See google-apps-script.gs + README.md.
+  USE_MOCK_DATA: true,
+  SHEETS_API_URL: "https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec"
+};
+
+document.getElementById("whatsappBtn").href = CONFIG.WHATSAPP_LINK;
+document.getElementById("heroJoinBtn").addEventListener("click", () => {});
+document.getElementById("contactEmailLink").href = "mailto:" + CONFIG.CONTACT_EMAIL;
+document.getElementById("contactEmailLink").textContent = CONFIG.CONTACT_EMAIL;
+document.getElementById("venueText").textContent = CONFIG.VENUE_TEXT;
+document.getElementById("meetingDetail").textContent = CONFIG.MEETING.label;
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------------------------------------------------------------------
+   Mobile menu
+--------------------------------------------------------------------- */
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const iconOpen = document.getElementById("menuIconOpen");
+const iconClose = document.getElementById("menuIconClose");
+
+menuBtn.addEventListener("click", () => {
+  const isHidden = mobileMenu.classList.contains("hidden");
+  mobileMenu.classList.toggle("hidden");
+  iconOpen.classList.toggle("hidden");
+  iconClose.classList.toggle("hidden");
+  menuBtn.setAttribute("aria-expanded", String(isHidden));
+});
+document.querySelectorAll(".mobile-link").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
+    iconOpen.classList.remove("hidden");
+    iconClose.classList.add("hidden");
+  });
+});
+
+/* ---------------------------------------------------------------------
+   Scroll reveal
+--------------------------------------------------------------------- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+/* ---------------------------------------------------------------------
+   Toast utility
+--------------------------------------------------------------------- */
+let toastTimer = null;
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
+}
+
+/* ---------------------------------------------------------------------
+   Countdown to next meeting
+--------------------------------------------------------------------- */
+function getNextMeetingDate() {
+  const { dayOfWeek, hour, minute } = CONFIG.MEETING;
+  const now = new Date();
+  const target = new Date(now);
+  target.setHours(hour, minute, 0, 0);
+
+  let diffDays = (dayOfWeek - now.getDay() + 7) % 7;
+  if (diffDays === 0 && now >= target) diffDays = 7;
+  target.setDate(now.getDate() + diffDays);
+  return target;
+}
+
+let nextMeeting = getNextMeetingDate();
+function tickCountdown() {
+  const now = new Date();
+  let diff = nextMeeting.getTime() - now.getTime();
+  if (diff <= 0) {
+    nextMeeting = getNextMeetingDate();
+    diff = nextMeeting.getTime() - now.getTime();
+  }
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+  const seconds = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById("cdDays").textContent = String(days).padStart(2, "0");
+  document.getElementById("cdHours").textContent = String(hours).padStart(2, "0");
+  document.getElementById("cdMinutes").textContent = String(minutes).padStart(2, "0");
+  document.getElementById("cdSeconds").textContent = String(seconds).padStart(2, "0");
+}
+tickCountdown();
+setInterval(tickCountdown, 1000);
+
+/* ---------------------------------------------------------------------
+   Birthday selects: Day / Month / Year
+--------------------------------------------------------------------- */
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+function populateSelects() {
+  const daySel = document.getElementById("fieldDay");
+  const monthSel = document.getElementById("fieldMonth");
+  const yearSel = document.getElementById("fieldYear");
+
+  daySel.innerHTML = '<option value="">Day</option>' +
+    Array.from({ length: 31 }, (_, i) => i + 1).map(d => `<option value="${d}">${d}</option>`).join("");
+
+  monthSel.innerHTML = '<option value="">Month</option>' +
+    monthNames.map((m, i) => `<option value="${i + 1}">${m}</option>`).join("");
+
+  const thisYear = new Date().getFullYear();
+  const years = [];
+  for (let y = thisYear - 10; y >= thisYear - 80; y--) years.push(y);
+  yearSel.innerHTML = '<option value="">Year</option>' +
+    years.map(y => `<option value="${y}">${y}</option>`).join("");
+}
+populateSelects();
+
+/* =====================================================================
+   GOOGLE SHEET MEMBER SYNC
+
+   USE_MOCK_DATA = true  -> uses the in-memory MOCK_MEMBERS array below,
+   so this demo works instantly with no backend.
+
+   USE_MOCK_DATA = false -> calls your Google Apps Script Web App
+   (see google-apps-script.gs and README.md for the matching backend).
+   ===================================================================== */
+let MOCK_MEMBERS = [
+  { id: 1, name: "Ada Lovelace",  email: "ada@trybeg.org",    phone: "+2348012345678", day: 12, month: 4,  year: 2002 },
+  { id: 2, name: "Kemi Adeyemi",  email: "kemi@trybeg.org",   phone: "+2348098765432", day: 30, month: 11, year: 2000 },
+  { id: 3, name: "Daniel Owusu",  email: "daniel@trybeg.org", phone: "+233244000111",  day: 5,  month: 1,  year: 2003 }
+];
+
+function normalize(str) {
+  return (str || "").toString().trim().toLowerCase();
+}
+
+async function findMember(query) {
+  if (CONFIG.USE_MOCK_DATA) {
+    await new Promise(r => setTimeout(r, 500)); // simulate network latency
+    const q = normalize(query);
+    const found = MOCK_MEMBERS.find(m => normalize(m.email) === q || normalize(m.phone).replace(/\s/g, "") === q.replace(/\s/g, ""));
+    return found || null;
+  }
+
+  // ---- Real Google Apps Script call (used when USE_MOCK_DATA = false) ----
+  const url = `${CONFIG.SHEETS_API_URL}?action=search&query=${encodeURIComponent(query)}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.found ? data.member : null;
+}
+
+async function saveMember(member) {
+  if (CONFIG.USE_MOCK_DATA) {
+    await new Promise(r => setTimeout(r, 500));
+    const idx = MOCK_MEMBERS.findIndex(m => m.id === member.id);
+    if (idx > -1) MOCK_MEMBERS[idx] = member;
+    return { success: true };
+  }
+
+  // ---- Real Google Apps Script call (used when USE_MOCK_DATA = false) ----
+  const res = await fetch(CONFIG.SHEETS_API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on Apps Script
+    body: JSON.stringify({ action: "update", member })
+  });
+  return res.json();
+}
+
+let activeMember = null;
+const lookupBtn = document.getElementById("lookupBtn");
+const lookupInput = document.getElementById("lookupInput");
+const lookupStatus = document.getElementById("lookupStatus");
+const profileForm = document.getElementById("profileForm");
+
+lookupBtn.addEventListener("click", async () => {
+  const query = lookupInput.value.trim();
+  if (!query) {
+    lookupStatus.textContent = "Enter your email or phone number first.";
+    lookupStatus.className = "text-sm mt-4 text-brand-amber";
+    return;
+  }
+
+  lookupBtn.disabled = true;
+  lookupBtn.textContent = "Looking...";
+  lookupStatus.classList.remove("hidden");
+  lookupStatus.textContent = "Searching the sheet...";
+  lookupStatus.className = "text-sm mt-4 text-white/50";
+
+  const member = await findMember(query);
+
+  lookupBtn.disabled = false;
+  lookupBtn.textContent = "Find My Record";
+
+  if (!member) {
+    activeMember = null;
+    profileForm.classList.add("hidden");
+    lookupStatus.textContent = "No match found — double check the email or phone number you joined with.";
+    lookupStatus.className = "text-sm mt-4 text-brand-amber";
+    return;
+  }
+
+  activeMember = { ...member };
+  lookupStatus.textContent = `Record found — welcome back, ${member.name.split(" ")[0]}.`;
+  lookupStatus.className = "text-sm mt-4 text-brand";
+
+  document.getElementById("fieldName").value = member.name;
+  document.getElementById("fieldEmail").value = member.email;
+  document.getElementById("fieldPhone").value = member.phone;
+  document.getElementById("fieldDay").value = member.day;
+  document.getElementById("fieldMonth").value = member.month;
+  document.getElementById("fieldYear").value = member.year;
+
+  profileForm.classList.remove("hidden");
+});
+
+lookupInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { e.preventDefault(); lookupBtn.click(); }
+});
+
+profileForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!activeMember) return;
+
+  const updated = {
+    ...activeMember,
+    name: document.getElementById("fieldName").value.trim(),
+    email: document.getElementById("fieldEmail").value.trim(),
+    phone: document.getElementById("fieldPhone").value.trim(),
+    day: Number(document.getElementById("fieldDay").value),
+    month: Number(document.getElementById("fieldMonth").value),
+    year: Number(document.getElementById("fieldYear").value)
+  };
+
+  const submitBtn = profileForm.querySelector("button[type=submit]");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Saving...";
+
+  const result = await saveMember(updated);
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Save Changes";
+
+  if (result && result.success) {
+    activeMember = updated;
+    toast("Changes saved.");
+  } else {
+    toast("Couldn't save right now — try again.");
+  }
+});
+
+/* ---------------------------------------------------------------------
+   Merch notify form
+--------------------------------------------------------------------- */
+document.getElementById("merchForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  toast("You're on the list.");
+  e.target.reset();
+});
+
+/* ---------------------------------------------------------------------
+   Meeting feedback form
+--------------------------------------------------------------------- */
+document.getElementById("feedbackForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  toast("Thanks — we hear you.");
+  e.target.reset();
+});
+
+/* ---------------------------------------------------------------------
+   Contact form
+--------------------------------------------------------------------- */
+document.getElementById("contactForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  toast("Message sent.");
+  e.target.reset();
+});
+</script>
+
+</body>
+</html>
