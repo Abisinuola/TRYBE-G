@@ -1,42 +1,41 @@
 /**
- * TRYBE-G — Google Apps Script backend for the Profile Sync feature.
+ * TRYBE-G - Google Apps Script backend.
  *
- * SET UP
- * 1. Open the Google Sheet used as the member database.
- * 2. In the Sheet, go to Extensions > Apps Script.
- * 3. Delete any starter code and paste this whole file.
- * 4. Click Deploy > New deployment.
- *      - Type: Web app
- *      - Execute as: Me
- *      - Who has access: Anyone
- * 5. Copy the Web app URL (ends in /exec).
- * 6. In index.html, set SHEETS_API_URL to that URL.
+ * Handles:
+ *  - Profile Sync (search + update member records)
+ *  - Shirt Interest registrations  -> "Shirt Interest" sheet
+ *  - Meeting Feedback              -> "Meeting Feedback" sheet
+ *  - Contact form submissions      -> "Contact" sheet + email to youths@highlandchurch.com.ng
  *
- * Sheet columns (0-indexed):
- *   0  Timestamp
- *   1  Source
- *   2  First Name
- *   3  Last Name
- *   4  Phone Number (WhatsApp enabled)
- *   5  Email Address
- *   6  Gender
- *   7  Age group
- *   8  Upload a recent picture of you
- *   9  Date of Birth (Month only)
- *   10 Date of Birth (Day only)
- *   11 Are you on the Youth WhatsApp group?
- *   12 Wedding Anniversary (Month only)
- *   13 Wedding Anniversary (Day only)
- *   14 Are you married?
- *   15 Employment Status
+ * Sheet columns (0-indexed) for "Form Responses 1":
+ *   0  Timestamp          6  Gender
+ *   1  Source             7  Age group
+ *   2  First Name         8  Picture upload
+ *   3  Last Name          9  Date of Birth (Month)
+ *   4  Phone Number       10 Date of Birth (Day)
+ *   5  Email Address      11+ other fields
  */
 
-const SHEET_NAME = "Form Responses 1";
+const MEMBER_SHEET   = "Form Responses 1";
+const SHIRT_SHEET    = "Shirt Interest";
+const FEEDBACK_SHEET = "Meeting Feedback";
+const CONTACT_SHEET  = "Contact";
+const CONTACT_EMAIL  = "youths@highlandchurch.com.ng";
 
-function getSheet_() {
+function getOrCreateSheet_(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) throw new Error('Sheet tab "' + SHEET_NAME + '" not found.');
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    sheet.appendRow(headers);
+  }
+  return sheet;
+}
+
+function getMemberSheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(MEMBER_SHEET);
+  if (!sheet) throw new Error('Sheet "' + MEMBER_SHEET + '" not found.');
   return sheet;
 }
 
@@ -57,11 +56,9 @@ function normalize_(value) {
 }
 
 function doGet(e) {
-  const action = e.parameter.action;
-
-  if (action === "search") {
+  if (e.parameter.action === "search") {
     const query = normalize_(e.parameter.query).replace(/\s/g, "");
-    const sheet = getSheet_();
+    const sheet = getMemberSheet_();
     const data = sheet.getDataRange().getValues();
 
     for (let i = 1; i < data.length; i++) {
@@ -82,35 +79,63 @@ function doPost(e) {
   const body = JSON.parse(e.postData.contents);
 
   if (body.action === "update") {
-    const member = body.member;
-    const sheet = getSheet_();
+    return handleUpdate_(body.member);
+  }
 
-    if (member.rowIndex) {
-      sheet.getRange(member.rowIndex, 3, 1, 4).setValues([[
+  if (body.action === "shirtInterest") {
+    const sheet = getOrCreateSheet_(SHIRT_SHEET, ["Timestamp", "Email"]);
+    sheet.appendRow([new Date(), body.email || ""]);
+    return jsonResponse_({ success: true });
+  }
+
+  if (body.action === "feedback") {
+    const sheet = getOrCreateSheet_(FEEDBACK_SHEET, ["Timestamp", "Message"]);
+    sheet.appendRow([new Date(), body.message || ""]);
+    return jsonResponse_({ success: true });
+  }
+
+  if (body.action === "contact") {
+    const sheet = getOrCreateSheet_(CONTACT_SHEET, ["Timestamp", "Name", "Email", "Message"]);
+    sheet.appendRow([new Date(), body.name || "", body.email || "", body.message || ""]);
+    try {
+      MailApp.sendEmail({
+        to: CONTACT_EMAIL,
+        subject: "TRYBE-G Contact: " + (body.name || "Someone"),
+        body: "From: " + (body.name || "") + "\nEmail: " + (body.email || "") + "\n\n" + (body.message || "")
+      });
+    } catch (_) {}
+    return jsonResponse_({ success: true });
+  }
+
+  return jsonResponse_({ error: "Unknown action" });
+}
+
+function handleUpdate_(member) {
+  const sheet = getMemberSheet_();
+
+  if (member.rowIndex) {
+    sheet.getRange(member.rowIndex, 3, 1, 4).setValues([[
+      member.firstName, member.lastName, member.phone, member.email
+    ]]);
+    sheet.getRange(member.rowIndex, 10, 1, 2).setValues([[
+      member.dobMonth, member.dobDay
+    ]]);
+    return jsonResponse_({ success: true });
+  }
+
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (normalize_(data[i][5]) === normalize_(member.originalEmail || member.email)) {
+      sheet.getRange(i + 1, 3, 1, 4).setValues([[
         member.firstName, member.lastName, member.phone, member.email
       ]]);
-      sheet.getRange(member.rowIndex, 10, 1, 2).setValues([[
+      sheet.getRange(i + 1, 10, 1, 2).setValues([[
         member.dobMonth, member.dobDay
       ]]);
       return jsonResponse_({ success: true });
     }
-
-    const data = sheet.getDataRange().getValues();
-    for (let i = 1; i < data.length; i++) {
-      if (normalize_(data[i][5]) === normalize_(member.originalEmail || member.email)) {
-        sheet.getRange(i + 1, 3, 1, 4).setValues([[
-          member.firstName, member.lastName, member.phone, member.email
-        ]]);
-        sheet.getRange(i + 1, 10, 1, 2).setValues([[
-          member.dobMonth, member.dobDay
-        ]]);
-        return jsonResponse_({ success: true });
-      }
-    }
-    return jsonResponse_({ success: false, error: "Member not found" });
   }
-
-  return jsonResponse_({ error: "Unknown action" });
+  return jsonResponse_({ success: false, error: "Member not found" });
 }
 
 function jsonResponse_(obj) {
