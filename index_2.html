@@ -93,6 +93,17 @@
     .area-center { grid-area: center; }
   }
 
+  @keyframes slide-loop {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .merch-track {
+    display: flex;
+    width: max-content;
+    animation: slide-loop 28s linear infinite;
+  }
+  .merch-track:hover { animation-play-state: paused; }
+
   html { scroll-behavior: smooth; }
 
   .toast {
@@ -267,15 +278,15 @@
       <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10">
 
         <div class="flex gap-0 mb-7 border border-white/10 chamfer-sm overflow-hidden">
-          <button id="tabNew" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-brand text-white">
-            I'm New
-          </button>
-          <button id="tabExisting" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-transparent text-white/50 hover:text-white">
+          <button id="tabExisting" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-brand text-white">
             I'm Existing
+          </button>
+          <button id="tabNew" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-transparent text-white/50 hover:text-white">
+            I'm New
           </button>
         </div>
 
-        <div id="panelNew">
+        <div id="panelNew" class="hidden">
           <p class="text-white/50 text-sm mb-5">Fill in your details to join the Trybe database.</p>
           <form id="registerForm" class="grid sm:grid-cols-2 gap-4">
             <div>
@@ -368,7 +379,7 @@
           </form>
         </div>
 
-        <div id="panelExisting" class="hidden">
+        <div id="panelExisting">
           <p class="text-white/50 text-sm mb-5">Enter the email or phone number you registered with.</p>
           <div class="flex flex-col sm:flex-row gap-3">
             <input id="lookupInput" type="text" placeholder="Email or phone number" autocomplete="off"
@@ -498,32 +509,24 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
 
-      <div class="reveal order-2 lg:order-1 relative overflow-hidden chamfer select-none">
-        <div id="merchSlides" class="flex transition-transform duration-500 ease-in-out">
-          <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-4.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-5.jpg" alt="TRYBE-G crew in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-6.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-7.jpg" alt="TRYBE-G duo in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-8.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-1.jpg" alt="TRYBE-G tee front and back" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-        </div>
-        <button id="prevSlide" aria-label="Previous" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-ink/60 hover:bg-brand text-white transition-colors chamfer-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <button id="nextSlide" aria-label="Next" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-ink/60 hover:bg-brand text-white transition-colors chamfer-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-        </button>
-        <div class="absolute bottom-3 inset-x-0 flex justify-center gap-1.5" id="slideDots">
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+      <div class="reveal order-2 lg:order-1 overflow-hidden chamfer select-none">
+        <div class="merch-track">
+          <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-4.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-5.jpg" alt="TRYBE-G crew in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-6.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-7.jpg" alt="TRYBE-G duo in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-8.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-1.jpg" alt="TRYBE-G tee front and back" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-4.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-5.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-6.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-7.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-8.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-1.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-3.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
         </div>
       </div>
 
@@ -801,20 +804,20 @@ const panelNew    = document.getElementById("panelNew");
 const panelExisting = document.getElementById("panelExisting");
 
 function switchTab(tab) {
-  const isNew = tab === "new";
-  tabNew.classList.toggle("bg-brand", isNew);
-  tabNew.classList.toggle("text-white", isNew);
-  tabNew.classList.toggle("bg-transparent", !isNew);
-  tabNew.classList.toggle("text-white/50", !isNew);
-  tabExisting.classList.toggle("bg-brand", !isNew);
-  tabExisting.classList.toggle("text-white", !isNew);
-  tabExisting.classList.toggle("bg-transparent", isNew);
-  tabExisting.classList.toggle("text-white/50", isNew);
-  panelNew.classList.toggle("hidden", !isNew);
-  panelExisting.classList.toggle("hidden", isNew);
+  const isExisting = tab === "existing";
+  tabExisting.classList.toggle("bg-brand", isExisting);
+  tabExisting.classList.toggle("text-white", isExisting);
+  tabExisting.classList.toggle("bg-transparent", !isExisting);
+  tabExisting.classList.toggle("text-white/50", !isExisting);
+  tabNew.classList.toggle("bg-brand", !isExisting);
+  tabNew.classList.toggle("text-white", !isExisting);
+  tabNew.classList.toggle("bg-transparent", isExisting);
+  tabNew.classList.toggle("text-white/50", isExisting);
+  panelExisting.classList.toggle("hidden", !isExisting);
+  panelNew.classList.toggle("hidden", isExisting);
 }
-tabNew.addEventListener("click", () => switchTab("new"));
 tabExisting.addEventListener("click", () => switchTab("existing"));
+tabNew.addEventListener("click", () => switchTab("new"));
 
 document.getElementById("regMarried").addEventListener("change", function () {
   document.getElementById("regAnnivWrap").classList.toggle("hidden", this.value !== "Married");
@@ -1121,38 +1124,6 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.target.reset();
 });
 
-(function () {
-  const slides = document.getElementById("merchSlides");
-  const dots   = document.querySelectorAll("#slideDots .slide-dot");
-  const total  = 8;
-  let current  = 0;
-  let autoTimer;
-
-  function goTo(idx) {
-    current = (idx + total) % total;
-    slides.style.transform = `translateX(-${current * 100}%)`;
-    dots.forEach((d, i) => {
-      d.classList.toggle("opacity-40", i !== current);
-      d.classList.remove("opacity-100");
-    });
-  }
-
-  document.getElementById("prevSlide").addEventListener("click", () => { goTo(current - 1); resetAuto(); });
-  document.getElementById("nextSlide").addEventListener("click", () => { goTo(current + 1); resetAuto(); });
-
-  function resetAuto() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(() => goTo(current + 1), 4000);
-  }
-  resetAuto();
-
-  let touchStartX = 0;
-  slides.addEventListener("touchstart", e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  slides.addEventListener("touchend", e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 40) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
-  }, { passive: true });
-})();
 </script>
 
 
