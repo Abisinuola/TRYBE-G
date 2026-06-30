@@ -93,6 +93,17 @@
     .area-center { grid-area: center; }
   }
 
+  @keyframes slide-loop {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .merch-track {
+    display: flex;
+    width: max-content;
+    animation: slide-loop 28s linear infinite;
+  }
+  .merch-track:hover { animation-play-state: paused; }
+
   html { scroll-behavior: smooth; }
 
   .toast {
@@ -247,8 +258,8 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="max-w-2xl reveal">
       <span class="font-mono text-xs uppercase tracking-[0.2em] text-brand-light">Your Place In The Trybe</span>
-      <h2 class="font-display text-3xl sm:text-4xl mt-3">Two ways in.</h2>
-      <p class="text-white/60 mt-4 text-lg leading-relaxed">Get into the group chat, and keep your details current so we can actually reach you.</p>
+      <h2 class="font-display text-3xl sm:text-4xl mt-3">You belong here.</h2>
+      <p class="text-white/60 mt-4 text-lg leading-relaxed">Register your details or keep yours current so we can celebrate and reach you.</p>
     </div>
 
     <div class="grid lg:grid-cols-2 gap-7 mt-14">
@@ -258,95 +269,73 @@
         <svg class="w-10 h-10 text-brand" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.45 5.15L2 22l5.1-1.55a9.8 9.8 0 0 0 4.94 1.33h.01c5.46 0 9.91-4.45 9.91-9.91 0-5.46-4.45-9.92-9.92-9.92zm5.83 13.65c-.25.7-1.45 1.36-2 1.45-.51.08-1.04.11-1.62-.1-.37-.13-.85-.29-1.46-.56-2.57-1.11-4.25-3.7-4.38-3.88-.13-.18-1.04-1.38-1.04-2.63s.66-1.86.9-2.12c.24-.25.51-.32.68-.32h.5c.16 0 .38-.06.59.45.25.6.83 2.06.9 2.22.07.16.12.34.02.54-.31.65-.7 1.04-.9 1.27-.13.15-.27.31-.12.59.6 1.13 1.42 1.97 2.5 2.6 1.08.62 1.45.59 1.7.55.24-.04.78-.31 1-.6.22-.29.45-.24.74-.14.3.1 1.86.88 2.18 1.03.32.16.53.24.6.37.08.13.08.74-.17 1.44z"/></svg>
         <h3 class="font-display text-2xl mt-6">Join the Youth Group</h3>
         <p class="text-white/60 mt-3 leading-relaxed">Tap in and land straight inside our group chat. Connect with the Trybe, hear about meetings first, and grow with people on the same journey.</p>
-
         <a id="whatsappBtn" href="https://chat.whatsapp.com/EUpSCNjqiTO5pIRaxbISqp" target="_blank" rel="noopener" class="mt-8 inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
           Join on WhatsApp
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
       </div>
 
-      <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10 sheet-grid">
-        <h3 class="font-display text-2xl">Update Your Profile</h3>
-        <p class="text-white/60 mt-3 leading-relaxed">Find your record and keep your details current so we can celebrate and reach you.</p>
+      <div class="reveal relative bg-inkpanel border border-white/10 chamfer p-8 sm:p-10">
 
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <input id="lookupInput" type="text" placeholder="Email or phone number" autocomplete="off"
-            class="flex-1 bg-ink/60 border border-white/15 px-4 py-3.5 text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none">
-          <button id="lookupBtn" class="bg-white text-ink font-semibold px-6 py-3.5 chamfer-sm hover:bg-brand hover:text-white transition-colors whitespace-nowrap">
-            Find My Record
+        <div class="flex gap-0 mb-7 border border-white/10 chamfer-sm overflow-hidden">
+          <button id="tabExisting" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-brand text-white">
+            I'm Existing
+          </button>
+          <button id="tabNew" class="portal-tab flex-1 py-3 text-sm font-semibold transition-colors bg-transparent text-white/50 hover:text-white">
+            I'm New
           </button>
         </div>
 
-        <p id="lookupStatus" class="text-sm mt-4 hidden"></p>
-
-        <div id="bdayBanner" class="hidden mt-5 bg-brand/10 border border-brand/30 chamfer-sm px-5 py-4 flex items-center gap-4">
-          <span class="text-3xl" aria-hidden="true">🎂</span>
-          <div>
-            <p class="font-semibold text-brand text-sm">It's your birthday!</p>
-            <p class="text-white/60 text-xs mt-0.5">The whole Trybe is celebrating you today. Have a blessed one.</p>
-          </div>
-        </div>
-
-        <form id="profileForm" class="hidden mt-6 grid sm:grid-cols-2 gap-4">
-          <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-light/80 border-b border-white/10 pb-2">
-            Name · Email · Phone · Birthday
-          </div>
-
-          <div>
-            <label for="fieldFirstName" class="block text-xs text-white/50 mb-1.5">First Name</label>
-            <input id="fieldFirstName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
-          </div>
-
-          <div>
-            <label for="fieldLastName" class="block text-xs text-white/50 mb-1.5">Last Name</label>
-            <input id="fieldLastName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
-          </div>
-
-          <div>
-            <label for="fieldEmail" class="block text-xs text-white/50 mb-1.5">Email</label>
-            <input id="fieldEmail" type="email" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
-          </div>
-
-          <div>
-            <label for="fieldPhone" class="block text-xs text-white/50 mb-1.5">Phone Number</label>
-            <input id="fieldPhone" type="tel" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
-          </div>
-
-          <div class="sm:col-span-2">
-            <label class="block text-xs text-white/50 mb-1.5">Date of Birth</label>
-            <div class="grid grid-cols-2 gap-3">
-              <select id="fieldDobMonth" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
-              <select id="fieldDobDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
-            </div>
-          </div>
-
-          <div class="sm:col-span-2 mt-2">
-            <button type="submit" class="w-full bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
-              Save Changes
-            </button>
-          </div>
-        </form>
-
-        <div id="registerSection" class="hidden mt-6">
-          <div class="font-mono text-[11px] uppercase tracking-widest text-brand-light/80 border-b border-white/10 pb-2 mb-4">
-            New Here? Add Your Details
-          </div>
+        <div id="panelNew" class="hidden">
+          <p class="text-white/50 text-sm mb-5">Fill in your details to join the Trybe database.</p>
           <form id="registerForm" class="grid sm:grid-cols-2 gap-4">
             <div>
-              <label for="regFirstName" class="block text-xs text-white/50 mb-1.5">First Name</label>
+              <label class="block text-xs text-white/50 mb-1.5">First Name</label>
               <input id="regFirstName" type="text" required placeholder="Ada" class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
             </div>
             <div>
-              <label for="regLastName" class="block text-xs text-white/50 mb-1.5">Last Name</label>
+              <label class="block text-xs text-white/50 mb-1.5">Last Name</label>
               <input id="regLastName" type="text" required placeholder="Okafor" class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
             </div>
             <div>
-              <label for="regEmail" class="block text-xs text-white/50 mb-1.5">Email</label>
+              <label class="block text-xs text-white/50 mb-1.5">Email</label>
               <input id="regEmail" type="email" required placeholder="you@email.com" class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
             </div>
             <div>
-              <label for="regPhone" class="block text-xs text-white/50 mb-1.5">Phone Number</label>
-              <input id="regPhone" type="tel" required placeholder="+234..." class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+              <label class="block text-xs text-white/50 mb-1.5">Phone (WhatsApp)</label>
+              <div class="flex gap-2">
+                <select id="regCountryCode" class="bg-ink/60 border border-white/15 px-2 py-3 text-white chamfer-sm focus:border-brand outline-none w-24 shrink-0">
+                  <option value="234">+234</option>
+                  <option value="1">+1</option>
+                  <option value="44">+44</option>
+                  <option value="27">+27</option>
+                  <option value="233">+233</option>
+                  <option value="254">+254</option>
+                  <option value="49">+49</option>
+                  <option value="353">+353</option>
+                </select>
+                <input id="regPhone" type="tel" required placeholder="08012345678" class="flex-1 bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Gender</label>
+              <select id="regGender" required class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Age Group</label>
+              <select id="regAgeGroup" required class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option>11 - 20 years</option>
+                <option>21 - 25 years</option>
+                <option>26 - 30 years</option>
+                <option>31 - 35 years</option>
+                <option>36 - 40 years</option>
+                <option>40+ years</option>
+              </select>
             </div>
             <div class="sm:col-span-2">
               <label class="block text-xs text-white/50 mb-1.5">Date of Birth</label>
@@ -355,9 +344,142 @@
                 <select id="regDobDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
               </div>
             </div>
-            <div class="sm:col-span-2 mt-2">
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Employment</label>
+              <select id="regEmployment" required class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option>Undergraduate / Student</option>
+                <option>Graduate (1-4 yrs Post-NYSC)</option>
+                <option>Experienced Professional (5-9 yrs Post-NYSC)</option>
+                <option>Employed / Worker</option>
+                <option>Business Owner / Entrepreneur</option>
+                <option>Skilled Trade / Artisan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Marital Status</label>
+              <select id="regMarried" required class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+            <div id="regAnnivWrap" class="sm:col-span-2 hidden">
+              <label class="block text-xs text-white/50 mb-1.5">Wedding Anniversary</label>
+              <div class="grid grid-cols-2 gap-3">
+                <select id="regAnnivMonth" class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+                <select id="regAnnivDay" class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              </div>
+            </div>
+            <div class="sm:col-span-2 mt-1">
               <button type="submit" class="w-full bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
                 Add Me to the Trybe
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="panelExisting">
+          <p class="text-white/50 text-sm mb-5">Enter the email or phone number you registered with.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input id="lookupInput" type="text" placeholder="Email or phone number" autocomplete="off"
+              class="flex-1 bg-ink/60 border border-white/15 px-4 py-3.5 text-white placeholder:text-white/35 chamfer-sm focus:border-brand outline-none">
+            <button id="lookupBtn" class="bg-white text-ink font-semibold px-6 py-3.5 chamfer-sm hover:bg-brand hover:text-white transition-colors whitespace-nowrap">
+              Find My Record
+            </button>
+          </div>
+
+          <p id="lookupStatus" class="text-sm mt-4 hidden"></p>
+
+          <div id="bdayBanner" class="hidden mt-5 bg-brand/10 border border-brand/30 chamfer-sm px-5 py-4 flex items-center gap-4">
+            <span class="text-3xl" aria-hidden="true">🎂</span>
+            <div>
+              <p class="font-semibold text-brand text-sm">It's your birthday!</p>
+              <p class="text-white/60 text-xs mt-0.5">The whole Trybe is celebrating you today. Have a blessed one.</p>
+            </div>
+          </div>
+
+          <form id="profileForm" class="hidden mt-6 grid sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest text-brand-light/80 border-b border-white/10 pb-2">
+              Update Your Details
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">First Name</label>
+              <input id="fieldFirstName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Last Name</label>
+              <input id="fieldLastName" type="text" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Email</label>
+              <input id="fieldEmail" type="email" required class="w-full bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Phone (WhatsApp)</label>
+              <div class="flex gap-2">
+                <select id="fieldCountryCode" class="bg-ink/60 border border-white/15 px-2 py-3 text-white chamfer-sm focus:border-brand outline-none w-24 shrink-0">
+                  <option value="234">+234</option>
+                  <option value="1">+1</option>
+                  <option value="44">+44</option>
+                  <option value="27">+27</option>
+                  <option value="233">+233</option>
+                  <option value="254">+254</option>
+                  <option value="49">+49</option>
+                  <option value="353">+353</option>
+                </select>
+                <input id="fieldPhone" type="tel" required class="flex-1 bg-ink/60 border border-white/15 px-4 py-3 text-white chamfer-sm focus:border-brand outline-none">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Age Group</label>
+              <select id="fieldAgeGroup" required class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option>11 - 20 years</option>
+                <option>21 - 25 years</option>
+                <option>26 - 30 years</option>
+                <option>31 - 35 years</option>
+                <option>36 - 40 years</option>
+                <option>40+ years</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Employment</label>
+              <select id="fieldEmployment" class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option>Undergraduate / Student</option>
+                <option>Graduate (1-4 yrs Post-NYSC)</option>
+                <option>Experienced Professional (5-9 yrs Post-NYSC)</option>
+                <option>Employed / Worker</option>
+                <option>Business Owner / Entrepreneur</option>
+                <option>Skilled Trade / Artisan</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs text-white/50 mb-1.5">Date of Birth</label>
+              <div class="grid grid-cols-2 gap-3">
+                <select id="fieldDobMonth" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+                <select id="fieldDobDay" required class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-white/50 mb-1.5">Marital Status</label>
+              <select id="fieldMarried" class="w-full bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none">
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+              </select>
+            </div>
+            <div id="fieldAnnivWrap" class="sm:col-span-2 hidden">
+              <label class="block text-xs text-white/50 mb-1.5">Wedding Anniversary</label>
+              <div class="grid grid-cols-2 gap-3">
+                <select id="fieldAnnivMonth" class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+                <select id="fieldAnnivDay" class="bg-ink/60 border border-white/15 px-3 py-3 text-white chamfer-sm focus:border-brand outline-none"></select>
+              </div>
+            </div>
+            <div class="sm:col-span-2 mt-1">
+              <button type="submit" class="w-full bg-brand hover:bg-brand-deep text-white font-semibold px-6 py-4 chamfer-sm transition-colors">
+                Save Changes
               </button>
             </div>
           </form>
@@ -379,7 +501,6 @@
         </div>
 
       </div>
-
     </div>
   </div>
 </section>
@@ -388,13 +509,25 @@
   <div class="max-w-7xl mx-auto px-5 sm:px-8">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
 
-      <div class="reveal order-2 lg:order-1 grid grid-cols-2 gap-3 items-end">
-        <img src="images/merch-2.jpg" alt="TRYBE-G group in tees"
-          class="col-span-2 w-full object-cover chamfer rounded-none aspect-[16/9]" loading="lazy">
-        <img src="images/merch-1.jpg" alt="TRYBE-G members in tees"
-          class="w-full object-cover chamfer-sm aspect-[3/4]" loading="lazy">
-        <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees"
-          class="w-full object-cover chamfer-sm aspect-[3/4]" loading="lazy">
+      <div class="reveal order-2 lg:order-1 overflow-hidden chamfer select-none">
+        <div class="merch-track">
+          <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-4.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-5.jpg" alt="TRYBE-G crew in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-6.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-7.jpg" alt="TRYBE-G duo in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-8.jpg" alt="TRYBE-G members in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-1.jpg" alt="TRYBE-G tee front and back" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees" class="h-72 w-auto object-cover shrink-0 mr-3" loading="lazy" draggable="false">
+          <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-4.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-5.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-6.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-7.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-8.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-1.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+          <img src="images/merch-3.jpg" alt="" class="h-72 w-auto object-cover shrink-0 mr-3" aria-hidden="true" draggable="false">
+        </div>
       </div>
 
       <div class="reveal order-1 lg:order-2">
@@ -635,25 +768,15 @@ function checkBirthday(dobMonth, dobDay) {
   return null;
 }
 
-function populateSelects() {
-  const monthSel = document.getElementById("fieldDobMonth");
-  const daySel = document.getElementById("fieldDobDay");
+const monthOpts = '<option value="">Month</option>' + monthNames.map(m => `<option value="${m}">${m}</option>`).join("");
+const dayOpts   = '<option value="">Day</option>' + Array.from({ length: 31 }, (_, i) => i + 1).map(d => `<option value="${d}">${d}</option>`).join("");
 
-  monthSel.innerHTML = '<option value="">Month</option>' +
-    monthNames.map(m => `<option value="${m}">${m}</option>`).join("");
-
-  daySel.innerHTML = '<option value="">Day</option>' +
-    Array.from({ length: 31 }, (_, i) => i + 1).map(d => `<option value="${d}">${d}</option>`).join("");
-}
-populateSelects();
-
-function populateRegSelects() {
-  document.getElementById("regDobMonth").innerHTML = '<option value="">Month</option>' +
-    monthNames.map(m => `<option value="${m}">${m}</option>`).join("");
-  document.getElementById("regDobDay").innerHTML = '<option value="">Day</option>' +
-    Array.from({ length: 31 }, (_, i) => i + 1).map(d => `<option value="${d}">${d}</option>`).join("");
-}
-populateRegSelects();
+["fieldDobMonth","fieldAnnivMonth","regDobMonth","regAnnivMonth"].forEach(id => {
+  document.getElementById(id).innerHTML = monthOpts;
+});
+["fieldDobDay","fieldAnnivDay","regDobDay","regAnnivDay"].forEach(id => {
+  document.getElementById(id).innerHTML = dayOpts;
+});
 
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
@@ -673,6 +796,34 @@ document.querySelectorAll(".mobile-link").forEach(link => {
     iconOpen.classList.remove("hidden");
     iconClose.classList.add("hidden");
   });
+});
+
+const tabNew      = document.getElementById("tabNew");
+const tabExisting = document.getElementById("tabExisting");
+const panelNew    = document.getElementById("panelNew");
+const panelExisting = document.getElementById("panelExisting");
+
+function switchTab(tab) {
+  const isExisting = tab === "existing";
+  tabExisting.classList.toggle("bg-brand", isExisting);
+  tabExisting.classList.toggle("text-white", isExisting);
+  tabExisting.classList.toggle("bg-transparent", !isExisting);
+  tabExisting.classList.toggle("text-white/50", !isExisting);
+  tabNew.classList.toggle("bg-brand", !isExisting);
+  tabNew.classList.toggle("text-white", !isExisting);
+  tabNew.classList.toggle("bg-transparent", isExisting);
+  tabNew.classList.toggle("text-white/50", isExisting);
+  panelExisting.classList.toggle("hidden", !isExisting);
+  panelNew.classList.toggle("hidden", isExisting);
+}
+tabExisting.addEventListener("click", () => switchTab("existing"));
+tabNew.addEventListener("click", () => switchTab("new"));
+
+document.getElementById("regMarried").addEventListener("change", function () {
+  document.getElementById("regAnnivWrap").classList.toggle("hidden", this.value !== "Married");
+});
+document.getElementById("fieldMarried").addEventListener("change", function () {
+  document.getElementById("fieldAnnivWrap").classList.toggle("hidden", this.value !== "Married");
 });
 
 function normalize(str) {
@@ -724,9 +875,8 @@ lookupBtn.addEventListener("click", async () => {
     if (!member) {
       activeMember = null;
       profileForm.classList.add("hidden");
-      lookupStatus.textContent = "No record found for that email or number. Are you new? Fill in your details below.";
+      lookupStatus.textContent = "No record found for that email or number. Switch to 'I'm New' to register.";
       lookupStatus.className = "text-sm mt-4 text-brand-light";
-      document.getElementById("registerSection").classList.remove("hidden");
       return;
     }
 
@@ -751,12 +901,19 @@ lookupBtn.addEventListener("click", async () => {
     document.getElementById("fieldFirstName").value = member.firstName;
     document.getElementById("fieldLastName").value = member.lastName;
     document.getElementById("fieldEmail").value = member.email;
+    document.getElementById("fieldCountryCode").value = member.countryCode || "234";
     document.getElementById("fieldPhone").value = member.phone;
+    document.getElementById("fieldAgeGroup").value = member.ageGroup || "";
     document.getElementById("fieldDobMonth").value = member.dobMonth;
     document.getElementById("fieldDobDay").value = member.dobDay;
+    document.getElementById("fieldEmployment").value = member.employment || "";
+    document.getElementById("fieldMarried").value = member.married || "";
+    const isMarried = (member.married || "") === "Married";
+    document.getElementById("fieldAnnivWrap").classList.toggle("hidden", !isMarried);
+    document.getElementById("fieldAnnivMonth").value = member.anniversaryMonth || "";
+    document.getElementById("fieldAnnivDay").value = member.anniversaryDay || "";
 
     profileForm.classList.remove("hidden");
-    document.getElementById("registerSection").classList.add("hidden");
   } catch (err) {
     lookupBtn.disabled = false;
     lookupBtn.textContent = "Find My Record";
@@ -773,14 +930,21 @@ profileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!activeMember) return;
 
+  const fMarried = document.getElementById("fieldMarried").value;
   const updated = {
     ...activeMember,
-    firstName: document.getElementById("fieldFirstName").value.trim(),
-    lastName: document.getElementById("fieldLastName").value.trim(),
-    email: document.getElementById("fieldEmail").value.trim(),
-    phone: document.getElementById("fieldPhone").value.trim(),
-    dobMonth: document.getElementById("fieldDobMonth").value,
-    dobDay: Number(document.getElementById("fieldDobDay").value)
+    firstName:        document.getElementById("fieldFirstName").value.trim(),
+    lastName:         document.getElementById("fieldLastName").value.trim(),
+    email:            document.getElementById("fieldEmail").value.trim(),
+    countryCode:      document.getElementById("fieldCountryCode").value,
+    phone:            document.getElementById("fieldPhone").value.trim(),
+    ageGroup:         document.getElementById("fieldAgeGroup").value,
+    dobMonth:         document.getElementById("fieldDobMonth").value,
+    dobDay:           Number(document.getElementById("fieldDobDay").value),
+    employment:       document.getElementById("fieldEmployment").value,
+    married:          fMarried,
+    anniversaryMonth: fMarried === "Married" ? document.getElementById("fieldAnnivMonth").value : "",
+    anniversaryDay:   fMarried === "Married" ? document.getElementById("fieldAnnivDay").value : ""
   };
 
   const submitBtn = profileForm.querySelector("button[type=submit]");
@@ -811,14 +975,21 @@ let pendingRegData = null;
 
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const firstName = document.getElementById("regFirstName").value.trim();
-  const lastName  = document.getElementById("regLastName").value.trim();
-  const email     = document.getElementById("regEmail").value.trim();
-  const phone     = document.getElementById("regPhone").value.trim();
-  const dobMonth  = document.getElementById("regDobMonth").value;
-  const dobDay    = document.getElementById("regDobDay").value;
+  const firstName        = document.getElementById("regFirstName").value.trim();
+  const lastName         = document.getElementById("regLastName").value.trim();
+  const email            = document.getElementById("regEmail").value.trim();
+  const countryCode      = document.getElementById("regCountryCode").value;
+  const phone            = document.getElementById("regPhone").value.trim();
+  const gender           = document.getElementById("regGender").value;
+  const ageGroup         = document.getElementById("regAgeGroup").value;
+  const dobMonth         = document.getElementById("regDobMonth").value;
+  const dobDay           = document.getElementById("regDobDay").value;
+  const employment       = document.getElementById("regEmployment").value;
+  const married          = document.getElementById("regMarried").value;
+  const anniversaryMonth = married === "Married" ? document.getElementById("regAnnivMonth").value : "";
+  const anniversaryDay   = married === "Married" ? document.getElementById("regAnnivDay").value : "";
 
-  pendingRegData = { firstName, lastName, email, phone, dobMonth, dobDay };
+  pendingRegData = { firstName, lastName, email, countryCode, phone, gender, ageGroup, dobMonth, dobDay, employment, married, anniversaryMonth, anniversaryDay };
 
   const btn = e.target.querySelector("button[type=submit]");
   btn.disabled = true;
@@ -848,17 +1019,25 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
       similarModal.querySelectorAll(".claim-btn").forEach(claimBtn => {
         claimBtn.addEventListener("click", () => {
           const rowIndex = Number(claimBtn.dataset.row);
-          activeMember = { rowIndex, firstName: claimBtn.dataset.first, lastName: claimBtn.dataset.last, email: pendingRegData.email, phone: pendingRegData.phone, dobMonth: pendingRegData.dobMonth, dobDay: pendingRegData.dobDay };
+          activeMember = { rowIndex, firstName: claimBtn.dataset.first, lastName: claimBtn.dataset.last, email: pendingRegData.email, countryCode: pendingRegData.countryCode, phone: pendingRegData.phone, gender: pendingRegData.gender, ageGroup: pendingRegData.ageGroup, dobMonth: pendingRegData.dobMonth, dobDay: pendingRegData.dobDay, employment: pendingRegData.employment, married: pendingRegData.married, anniversaryMonth: pendingRegData.anniversaryMonth, anniversaryDay: pendingRegData.anniversaryDay };
           document.getElementById("fieldFirstName").value = claimBtn.dataset.first;
           document.getElementById("fieldLastName").value = claimBtn.dataset.last;
           document.getElementById("fieldEmail").value = pendingRegData.email;
+          document.getElementById("fieldCountryCode").value = pendingRegData.countryCode || "234";
           document.getElementById("fieldPhone").value = pendingRegData.phone;
+          document.getElementById("fieldAgeGroup").value = pendingRegData.ageGroup || "";
           document.getElementById("fieldDobMonth").value = pendingRegData.dobMonth;
           document.getElementById("fieldDobDay").value = pendingRegData.dobDay;
+          document.getElementById("fieldEmployment").value = pendingRegData.employment || "";
+          document.getElementById("fieldMarried").value = pendingRegData.married || "";
+          document.getElementById("fieldAnnivWrap").classList.toggle("hidden", pendingRegData.married !== "Married");
+          document.getElementById("fieldAnnivMonth").value = pendingRegData.anniversaryMonth || "";
+          document.getElementById("fieldAnnivDay").value = pendingRegData.anniversaryDay || "";
+          switchTab("existing");
           profileForm.classList.remove("hidden");
-          document.getElementById("registerSection").classList.add("hidden");
           lookupStatus.textContent = `Welcome back, ${claimBtn.dataset.first}. Please verify and save your details.`;
           lookupStatus.className = "text-sm mt-4 text-brand";
+          lookupStatus.classList.remove("hidden");
           similarModal.classList.add("hidden");
         });
       });
@@ -890,10 +1069,8 @@ async function submitRegistration(data) {
     });
     const result = await res.json();
     if (result.success) {
-      document.getElementById("registerSection").classList.add("hidden");
-      lookupStatus.textContent = `Welcome to the Trybe, ${data.firstName}! You're now on the record.`;
-      lookupStatus.className = "text-sm mt-4 text-brand font-semibold";
       document.getElementById("registerForm").reset();
+      document.getElementById("regAnnivWrap").classList.add("hidden");
       toast("You're in. Welcome to TRYBE-G!");
     } else {
       toast("Couldn't register right now. Try again.");
@@ -946,6 +1123,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   toast("Message sent.");
   e.target.reset();
 });
+
 </script>
 
 

@@ -2,12 +2,15 @@
  * TRYBE-G - Google Apps Script backend.
  *
  * Sheet columns (0-indexed) for "Form Responses 1":
- *   0  Timestamp          6  Gender
- *   1  Source             7  Age group
- *   2  First Name         8  Picture upload
- *   3  Last Name          9  Date of Birth (Month)
- *   4  Phone Number       10 Date of Birth (Day)
- *   5  Email Address      11+ other fields
+ *   0  Timestamp              8  Age group
+ *   1  Source                 9  Picture
+ *   2  First Name             10 DOB Month
+ *   3  Last Name              11 DOB Day
+ *   4  Country Code           12 On WhatsApp group?
+ *   5  Phone Number           13 Anniversary Month
+ *   6  Email Address          14 Anniversary Day
+ *   7  Gender                 15 Married?
+ *                             16 Employment Category
  */
 
 const MEMBER_SHEET   = "Form Responses 1";
@@ -35,13 +38,20 @@ function getMemberSheet_() {
 
 function rowToMember_(row, rowIndex) {
   return {
-    rowIndex:  rowIndex,
-    firstName: (row[2] || "").toString().trim(),
-    lastName:  (row[3] || "").toString().trim(),
-    phone:     (row[4] || "").toString().trim(),
-    email:     (row[5] || "").toString().trim(),
-    dobMonth:  (row[9] || "").toString().trim(),
-    dobDay:    (row[10] || "").toString().trim()
+    rowIndex:        rowIndex,
+    firstName:       (row[2]  || "").toString().trim(),
+    lastName:        (row[3]  || "").toString().trim(),
+    countryCode:     (row[4]  || "234").toString().trim(),
+    phone:           (row[5]  || "").toString().trim(),
+    email:           (row[6]  || "").toString().trim(),
+    gender:          (row[7]  || "").toString().trim(),
+    ageGroup:        (row[8]  || "").toString().trim(),
+    dobMonth:        (row[10] || "").toString().trim(),
+    dobDay:          (row[11] || "").toString().trim(),
+    anniversaryMonth:(row[13] || "").toString().trim(),
+    anniversaryDay:  (row[14] || "").toString().trim(),
+    married:         (row[15] || "").toString().trim(),
+    employment:      (row[16] || "").toString().trim()
   };
 }
 
@@ -64,8 +74,8 @@ function doGet(e) {
 
     for (let i = 1; i < data.length; i++) {
       const row = data[i];
-      const email = normalize_(row[5]);
-      const phone = normalize_(row[4]).replace(/\s/g, "");
+      const email = normalize_(row[6]);
+      const phone = normalize_(row[5]).replace(/\s/g, "");
       if (email === query || phone === query) {
         return jsonResponse_({ found: true, member: rowToMember_(row, i + 1) });
       }
@@ -78,25 +88,23 @@ function doGet(e) {
     const lastName  = normalize_(e.parameter.lastName  || "");
     if (!firstName && !lastName) return jsonResponse_({ matches: [] });
 
-    const sheet = getMemberSheet_();
-    const data  = sheet.getDataRange().getValues();
+    const sheet  = getMemberSheet_();
+    const data   = sheet.getDataRange().getValues();
     const matches = [];
 
     for (let i = 1; i < data.length; i++) {
       const row    = data[i];
       const rFirst = normalize_(row[2]);
       const rLast  = normalize_(row[3]);
-      const firstMatch = firstName && rFirst === firstName;
-      const lastMatch  = lastName  && rLast  === lastName;
-      if (firstMatch || lastMatch) {
+      if ((firstName && rFirst === firstName) || (lastName && rLast === lastName)) {
         matches.push({
           rowIndex:  i + 1,
           firstName: (row[2] || "").toString().trim(),
           lastName:  (row[3] || "").toString().trim(),
-          email:     maskEmail_(row[5]),
-          phone:     (row[4] || "").toString().replace(/.(?=.{4})/g, "*"),
-          dobMonth:  (row[9]  || "").toString().trim(),
-          dobDay:    (row[10] || "").toString().trim(),
+          email:     maskEmail_(row[6]),
+          phone:     (row[5] || "").toString().replace(/.(?=.{4})/g, "*"),
+          dobMonth:  (row[10] || "").toString().trim(),
+          dobDay:    (row[11] || "").toString().trim(),
           _rowIndex: i + 1
         });
       }
@@ -119,15 +127,21 @@ function doPost(e) {
     sheet.appendRow([
       new Date(),
       "Website",
-      body.firstName || "",
-      body.lastName  || "",
-      body.phone     || "",
-      body.email     || "",
+      body.firstName        || "",
+      body.lastName         || "",
+      body.countryCode      || "234",
+      body.phone            || "",
+      body.email            || "",
+      body.gender           || "",
+      body.ageGroup         || "",
       "",
+      body.dobMonth         || "",
+      body.dobDay           || "",
       "",
-      "",
-      body.dobMonth  || "",
-      body.dobDay    || ""
+      body.anniversaryMonth || "",
+      body.anniversaryDay   || "",
+      body.married          || "",
+      body.employment       || ""
     ]);
     return jsonResponse_({ success: true });
   }
@@ -163,25 +177,26 @@ function doPost(e) {
 function handleUpdate_(member) {
   const sheet = getMemberSheet_();
 
+  function writeRow_(rowIndex) {
+    sheet.getRange(rowIndex, 3, 1, 5).setValues([[
+      member.firstName, member.lastName, member.countryCode, member.phone, member.email
+    ]]);
+    sheet.getRange(rowIndex, 9, 1, 1).setValues([[member.ageGroup]]);
+    sheet.getRange(rowIndex, 11, 1, 2).setValues([[member.dobMonth, member.dobDay]]);
+    sheet.getRange(rowIndex, 14, 1, 4).setValues([[
+      member.anniversaryMonth, member.anniversaryDay, member.married, member.employment
+    ]]);
+  }
+
   if (member.rowIndex) {
-    sheet.getRange(member.rowIndex, 3, 1, 4).setValues([[
-      member.firstName, member.lastName, member.phone, member.email
-    ]]);
-    sheet.getRange(member.rowIndex, 10, 1, 2).setValues([[
-      member.dobMonth, member.dobDay
-    ]]);
+    writeRow_(member.rowIndex);
     return jsonResponse_({ success: true });
   }
 
   const data = sheet.getDataRange().getValues();
   for (let i = 1; i < data.length; i++) {
-    if (normalize_(data[i][5]) === normalize_(member.originalEmail || member.email)) {
-      sheet.getRange(i + 1, 3, 1, 4).setValues([[
-        member.firstName, member.lastName, member.phone, member.email
-      ]]);
-      sheet.getRange(i + 1, 10, 1, 2).setValues([[
-        member.dobMonth, member.dobDay
-      ]]);
+    if (normalize_(data[i][6]) === normalize_(member.originalEmail || member.email)) {
+      writeRow_(i + 1);
       return jsonResponse_({ success: true });
     }
   }
