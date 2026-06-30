@@ -501,7 +501,12 @@
       <div class="reveal order-2 lg:order-1 relative overflow-hidden chamfer select-none">
         <div id="merchSlides" class="flex transition-transform duration-500 ease-in-out">
           <img src="images/merch-2.jpg" alt="TRYBE-G group in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
-          <img src="images/merch-1.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-4.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-5.jpg" alt="TRYBE-G crew in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-6.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-7.jpg" alt="TRYBE-G duo in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-8.jpg" alt="TRYBE-G members in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
+          <img src="images/merch-1.jpg" alt="TRYBE-G tee front and back" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
           <img src="images/merch-3.jpg" alt="TRYBE-G crew in tees" class="w-full shrink-0 object-cover aspect-[4/3]" loading="lazy" draggable="false">
         </div>
         <button id="prevSlide" aria-label="Previous" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-ink/60 hover:bg-brand text-white transition-colors chamfer-sm">
@@ -510,10 +515,15 @@
         <button id="nextSlide" aria-label="Next" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-ink/60 hover:bg-brand text-white transition-colors chamfer-sm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <div class="absolute bottom-3 inset-x-0 flex justify-center gap-2" id="slideDots">
-          <span class="slide-dot w-2 h-2 rounded-full bg-white transition-opacity"></span>
-          <span class="slide-dot w-2 h-2 rounded-full bg-white transition-opacity opacity-40"></span>
-          <span class="slide-dot w-2 h-2 rounded-full bg-white transition-opacity opacity-40"></span>
+        <div class="absolute bottom-3 inset-x-0 flex justify-center gap-1.5" id="slideDots">
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
+          <span class="slide-dot w-1.5 h-1.5 rounded-full bg-white transition-opacity opacity-40"></span>
         </div>
       </div>
 
@@ -1114,7 +1124,7 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 (function () {
   const slides = document.getElementById("merchSlides");
   const dots   = document.querySelectorAll("#slideDots .slide-dot");
-  const total  = 3;
+  const total  = 8;
   let current  = 0;
   let autoTimer;
 
